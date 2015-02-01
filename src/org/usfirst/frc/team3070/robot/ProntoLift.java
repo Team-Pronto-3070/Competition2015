@@ -1,9 +1,10 @@
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class ProntoLift extends Thread {
+public class ProntoLift extends Thread implements Pronstants {
 	
 	boolean running = false;
 	SpeedController motor1, motor2;
@@ -23,24 +24,16 @@ public class ProntoLift extends Thread {
 	public void run() {
 		while (true) {
 			while (running) {
-				if (xbox.getRawButton(1)) { // A
-					motor1.set(1);
-					motor2.set(-1);
+				if (xbox.getRawButton(A_BUTTON)) {
+					liftUp();
+				} else if (xbox.getRawButton(B_BUTTON)) { 
+					liftDown();
 				} else {
-					motor1.set(0);
-					motor2.set(0);
-				}
-				
-				if (xbox.getRawButton(2)) { // B
-					motor1.set(-1);
-					motor2.set(1);
-				} else {
-					motor1.set(0);
-					motor2.set(0);
+					liftStop();
 				}
 				
 				try {
-					Thread.sleep(10);
+					Thread.sleep(20);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -52,6 +45,25 @@ public class ProntoLift extends Thread {
 				ex.printStackTrace();
 			}
 		}
+	}
+	
+	private void liftUp() {
+		motor1.set(LIFT_SPEED);
+		motor2.set(-LIFT_SPEED);
+		xbox.setRumble(RumbleType.kLeftRumble, 1);
+		xbox.setRumble(RumbleType.kRightRumble, 1);
+	}
+	
+	private void liftDown() {
+		motor1.set(-LIFT_SPEED);
+		motor2.set(LIFT_SPEED);
+	}
+	
+	private void liftStop() {
+		motor1.set(0);
+		motor2.set(0);
+		xbox.setRumble(RumbleType.kLeftRumble, 0);
+		xbox.setRumble(RumbleType.kRightRumble, 0);
 	}
 
 }

@@ -13,12 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
-	
-	public static final int LEFT_X = 0;
-	public static final int LEFT_Y = 1;
-	
-	public static final int RIGHT_X = 4;
+public class Robot extends IterativeRobot implements Pronstants {
 	
 	//Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 	
@@ -33,14 +28,16 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	mFrontLeft = new CANTalon(3);
-    	mFrontRight = new CANTalon(2);
-    	mRearLeft = new CANTalon(5);
-    	mRearRight = new CANTalon(4);
-    	mLift1 = new CANTalon(8);
-    	mLift2 = new CANTalon(9);
-    	mLoader = new CANTalon(7);
-    	xbox = new Joystick(1);
+    	mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
+    	mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
+    	mRearLeft = new CANTalon(M_REAR_LEFT_ID);
+    	mRearRight = new CANTalon(M_REAR_RIGHT_ID);
+    	mLift1 = new CANTalon(M_LIFT1_ID);
+    	mLift2 = new CANTalon(M_LIFT2_ID);
+    	mLoader = new CANTalon(M_LOADER_ID);
+    	
+    	xbox = new Joystick(JOYSTICK_PORT);
+    	
     	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, xbox);
     	lift = new ProntoLift(mLift1, mLift2, xbox);
     	loader = new ProntoLoader(mLoader, xbox);

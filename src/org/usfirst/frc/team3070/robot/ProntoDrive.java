@@ -6,13 +6,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class ProntoDrive extends Thread {
-
-	private static final double DEADZONE = 0.2;
-
-	double kP = 0.0125;
-	double kI = 0.0;
-	double kD = 0.0;
+public class ProntoDrive extends Thread implements Pronstants {
 
 	SpeedController motorFrontLeft, motorFrontRight, motorBackLeft,
 			motorBackRight;
@@ -54,13 +48,13 @@ public class ProntoDrive extends Thread {
 
 		/*
 		//PIDs
-		PIDFrontLeft = new PIDController(kP, kI, kD, enFrontLeft,
+		PIDFrontLeft = new PIDController(Robot.KP, Robot.KI, Robot.KD, enFrontLeft,
 				new RateControllerMotor(motorFrontLeft));
-		PIDFrontRight = new PIDController(kP, kI, kD, enFrontRight,
+		PIDFrontRight = new PIDController(Robot.KP, Robot.KI, Robot.KD, enFrontRight,
 				new RateControllerMotor(motorFrontRight));
-		PIDBackLeft = new PIDController(kP, kI, kD, enBackLeft,
+		PIDBackLeft = new PIDController(Robot.KP, Robot.KI, Robot.KD, enBackLeft,
 				new RateControllerMotor(motorBackLeft));
-		PIDBackRight = new PIDController(kP, kI, kD, enBackRight,
+		PIDBackRight = new PIDController(Robot.KP, Robot.KI, Robot.KD, enBackRight,
 				new RateControllerMotor(motorBackRight));
 				
 		*/
@@ -79,9 +73,9 @@ public class ProntoDrive extends Thread {
 	public void run() {
 		while (true) {
 			while (running) {
-				x = xbox.getRawAxis(Robot.LEFT_X);
-				y = xbox.getRawAxis(Robot.LEFT_Y);
-				z = xbox.getRawAxis(Robot.RIGHT_X);
+				x = xbox.getRawAxis(LEFT_X);
+				y = xbox.getRawAxis(LEFT_Y);
+				z = xbox.getRawAxis(RIGHT_X);
 				
 				checkDeadzones();
 				
