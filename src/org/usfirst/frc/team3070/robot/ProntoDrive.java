@@ -10,7 +10,7 @@ public class ProntoDrive extends Thread implements Pronstants {
 
 	SpeedController motorFrontLeft, motorFrontRight, motorBackLeft,
 			motorBackRight;
-	Joystick xbox;
+	Joystick jLeft, jRight;
 	Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 
 	RobotDrive mechDrive;
@@ -21,7 +21,7 @@ public class ProntoDrive extends Thread implements Pronstants {
 
 	public ProntoDrive(SpeedController m1, SpeedController m2,
 			SpeedController m3, SpeedController m4, /* Encoder fL, Encoder fR,
-			Encoder bL, Encoder bR, */ Joystick xb) {
+			Encoder bL, Encoder bR, */ Joystick jL, Joystick jR) {
 
 		// motors (CANTalons)
 		motorFrontLeft = m1;
@@ -38,7 +38,8 @@ public class ProntoDrive extends Thread implements Pronstants {
 		*/
 
 		// Joystick
-		xbox = xb;
+		jLeft = jL;
+		jRight = jR;
 
 		// RobotDrive
 		mechDrive = new RobotDrive(motorFrontLeft, motorBackLeft,
@@ -73,9 +74,9 @@ public class ProntoDrive extends Thread implements Pronstants {
 	public void run() {
 		while (true) {
 			while (running) {
-				x = xbox.getRawAxis(LEFT_X);
-				y = xbox.getRawAxis(LEFT_Y);
-				z = xbox.getRawAxis(RIGHT_X);
+				x = jLeft.getX();
+				y = jLeft.getY();
+				z = jRight.getX();
 				
 				checkDeadzones();
 				

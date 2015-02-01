@@ -21,7 +21,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLift lift;
 	ProntoLoader loader;
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2, mLoader;
-	Joystick xbox;
+	Joystick jLeft, jRight;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -36,11 +36,12 @@ public class Robot extends IterativeRobot implements Pronstants {
     	mLift2 = new CANTalon(M_LIFT2_ID);
     	mLoader = new CANTalon(M_LOADER_ID);
     	
-    	xbox = new Joystick(JOYSTICK_PORT);
+    	jLeft = new Joystick(J_LEFT_PORT);
+    	jRight = new Joystick(J_RIGHT_PORT);
     	
-    	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, xbox);
-    	lift = new ProntoLift(mLift1, mLift2, xbox);
-    	loader = new ProntoLoader(mLoader, xbox);
+    	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, jLeft, jRight);
+    	lift = new ProntoLift(mLift1, mLift2, jLeft, jRight);
+    	loader = new ProntoLoader(mLoader, jRight);
     	
     	drive.start();
     	loader.start();

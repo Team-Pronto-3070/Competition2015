@@ -27,7 +27,8 @@ public interface Pronstants {
 	
 	// Joystick
 	// Ports used in: Robot.java
-	public static final int JOYSTICK_PORT = 1;
+	public static final int J_LEFT_PORT = 1;
+	public static final int J_RIGHT_PORT = 2;
 	
 	// PID
 	// Ports used in: N/A
@@ -36,7 +37,7 @@ public interface Pronstants {
 	public static final double KD = 0.0;
 	
 	
-	public static final double DEADZONE = 0.2;
+	public static final double DEADZONE = 0.15;
 	public static final double LIFT_SPEED = 1.0;
 
 

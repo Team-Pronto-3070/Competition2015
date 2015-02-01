@@ -8,12 +8,13 @@ public class ProntoLift extends Thread implements Pronstants {
 	
 	boolean running = false;
 	SpeedController motor1, motor2;
-	Joystick xbox;
+	Joystick jLeft, jRight;
 	
-	public ProntoLift(SpeedController m1, SpeedController m2, Joystick x) {
+	public ProntoLift(SpeedController m1, SpeedController m2, Joystick jL, Joystick jR) {
 		motor1 = m1;
 		motor2 = m2;
-		xbox = x;
+		jLeft = jL;
+		jRight = jR;
 	}
 	
 	public void setRun(boolean run) {
@@ -24,9 +25,9 @@ public class ProntoLift extends Thread implements Pronstants {
 	public void run() {
 		while (true) {
 			while (running) {
-				if (xbox.getRawButton(A_BUTTON)) {
+				if (jRight.getRawButton(3)) {
 					liftUp();
-				} else if (xbox.getRawButton(B_BUTTON)) { 
+				} else if (jRight.getRawButton(2)) { 
 					liftDown();
 				} else {
 					liftStop();
@@ -50,8 +51,6 @@ public class ProntoLift extends Thread implements Pronstants {
 	private void liftUp() {
 		motor1.set(LIFT_SPEED);
 		motor2.set(-LIFT_SPEED);
-		xbox.setRumble(RumbleType.kLeftRumble, 1);
-		xbox.setRumble(RumbleType.kRightRumble, 1);
 	}
 	
 	private void liftDown() {
@@ -62,8 +61,6 @@ public class ProntoLift extends Thread implements Pronstants {
 	private void liftStop() {
 		motor1.set(0);
 		motor2.set(0);
-		xbox.setRumble(RumbleType.kLeftRumble, 0);
-		xbox.setRumble(RumbleType.kRightRumble, 0);
 	}
 
 }

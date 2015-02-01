@@ -7,12 +7,13 @@ public class ProntoLoader extends Thread implements Pronstants {
 
 	boolean running = false;
 
-	SpeedController load;
-	Joystick xbox;
+	SpeedController load, flex;
+	Joystick jRight;
 
-	public ProntoLoader(SpeedController l, Joystick x) {
+	public ProntoLoader(SpeedController l, Joystick jR) {
 		load = l;
-		xbox = x;
+		jRight = jR;
+		// flex = f;
 	}
 
 	public void setRun(boolean run) {
@@ -23,12 +24,12 @@ public class ProntoLoader extends Thread implements Pronstants {
 	public void run() {
 		while (true) {
 			while (running) {
-				if (xbox.getRawButton(LEFT_BUMPER)) {
+				if (jRight.getRawButton(1)) {
 					load.set(.5);
-				} else if (xbox.getRawButton(RIGHT_BUMPER)) {
-					load.set(-.5);
+					// flex.set(.25);
 				} else {
 					load.set(0);
+					// flex.set(0);
 				}
 
 				try {
