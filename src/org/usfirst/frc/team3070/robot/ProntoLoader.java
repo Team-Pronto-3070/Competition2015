@@ -23,25 +23,7 @@ public class ProntoLoader extends Thread implements Pronstants {
 	@Override
 	public void run() {
 		while (true) {
-			while (running) {
-<<<<<<< HEAD
-				
-				if(xbox.getRawButton(A_BUTTON)){
-					load.set(LOAD_SPEED_OUT);
-				}else {
-					if(xbox.getRawButton(B_BUTTON)){
-						load.set(LOAD_SPEED_IN);
-					}else{
-						load.set(0);
-					}
-				}
-				//
-				//
-				// Code here to activate the loader
-				//
-				//
-				
-=======
+			while (running) {				
 				if (xbox.getRawButton(LEFT_BUMPER)) {
 					load.set(LOAD_SPEED);
 				} else if (xbox.getRawButton(RIGHT_BUMPER)) {
@@ -58,7 +40,6 @@ public class ProntoLoader extends Thread implements Pronstants {
 					flex.set(0);
 				}
 
->>>>>>> 8b1b58db90f235520bb8594c2f24f5fcdbc9c4c3
 				try {
 					Thread.sleep(20);
 				} catch (Exception ex) {
