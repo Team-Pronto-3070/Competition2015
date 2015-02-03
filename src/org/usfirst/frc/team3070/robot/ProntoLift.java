@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class ProntoLift extends Thread implements Pronstants {
@@ -26,10 +25,12 @@ public class ProntoLift extends Thread implements Pronstants {
 			while (running) {
 				if (xbox.getRawButton(A_BUTTON)) {
 					liftUp();
-				} else if (xbox.getRawButton(B_BUTTON)) { 
-					liftDown();
 				} else {
-					liftStop();
+					if (xbox.getRawButton(B_BUTTON)) { 
+						liftDown();
+					} else {
+						liftStop();
+					}
 				}
 				
 				try {

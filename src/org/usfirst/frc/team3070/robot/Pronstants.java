@@ -41,6 +41,6 @@ public interface Pronstants {
 	public static final double DEADZONE = 0.2;
 	public static final double LIFT_SPEED = 1.0;
 	public static final double LOAD_SPEED = 1.0;
-	public static final double FLEX_SPEED = .75;
+	public static final double FLEX_SPEED = 1.0;
 
 }
