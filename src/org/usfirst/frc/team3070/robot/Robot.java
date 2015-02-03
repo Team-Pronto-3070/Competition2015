@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoDrive drive;
 	ProntoLift lift;
 	ProntoLoader loader;
-	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2, mLoader;
+	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2, mLoader, mFlex;
 	Joystick xbox;
 	
     /**
@@ -35,12 +35,13 @@ public class Robot extends IterativeRobot implements Pronstants {
     	mLift1 = new CANTalon(M_LIFT1_ID);
     	mLift2 = new CANTalon(M_LIFT2_ID);
     	mLoader = new CANTalon(M_LOADER_ID);
+    	mFlex = new CANTalon(M_FLEX_ID);
     	
     	xbox = new Joystick(JOYSTICK_PORT);
     	
     	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, xbox);
     	lift = new ProntoLift(mLift1, mLift2, xbox);
-    	loader = new ProntoLoader(mLoader, xbox);
+    	loader = new ProntoLoader(mLoader, mFlex, xbox);
     	
     	drive.start();
     	loader.start();

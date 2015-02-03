@@ -50,8 +50,8 @@ public class ProntoLift extends Thread implements Pronstants {
 	private void liftUp() {
 		motor1.set(LIFT_SPEED);
 		motor2.set(-LIFT_SPEED);
-		xbox.setRumble(RumbleType.kLeftRumble, 1);
-		xbox.setRumble(RumbleType.kRightRumble, 1);
+		// xbox.setRumble(RumbleType.kLeftRumble, 1);
+		// xbox.setRumble(RumbleType.kRightRumble, 1);
 	}
 	
 	private void liftDown() {
@@ -62,8 +62,8 @@ public class ProntoLift extends Thread implements Pronstants {
 	private void liftStop() {
 		motor1.set(0);
 		motor2.set(0);
-		xbox.setRumble(RumbleType.kLeftRumble, 0);
-		xbox.setRumble(RumbleType.kRightRumble, 0);
+		// xbox.setRumble(RumbleType.kLeftRumble, 0);
+		// xbox.setRumble(RumbleType.kRightRumble, 0);
 	}
 
 }
