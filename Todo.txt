@@ -6,4 +6,10 @@ Todo List
 
 3. setDistancePerPulse bases on pulses per revolution
 
+<<<<<<< HEAD
 4. check rates (rates will be in
+=======
+4. check rates (rates will be in pulses per rev (?))
+
+5. 
+>>>>>>> 8b1b58db90f235520bb8594c2f24f5fcdbc9c4c3

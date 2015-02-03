@@ -11,9 +11,13 @@ public interface Pronstants {
 	// Joystick Buttons
 	// Ports used in: ProntoLift.java, ProntoLoader.java
 	public static final int A_BUTTON = 1;
+<<<<<<< HEAD
 	//used in ProntoLoader.java to set loader
 	public static final int B_BUTTON = 2;
 	//used in ProntoLoader.java
+=======
+	public static final int B_BUTTON = 2;
+>>>>>>> 8b1b58db90f235520bb8594c2f24f5fcdbc9c4c3
 	public static final int LEFT_BUMPER = 5;
 	public static final int RIGHT_BUMPER = 6;
 	
@@ -40,7 +44,11 @@ public interface Pronstants {
 	
 	public static final double DEADZONE = 0.2;
 	public static final double LIFT_SPEED = 1.0;
+<<<<<<< HEAD
 	public static final double LOAD_SPEED_OUT = 1.0;
 	public static final double LOAD_SPEED_IN = -1.0;
+=======
+
+>>>>>>> 8b1b58db90f235520bb8594c2f24f5fcdbc9c4c3
 
 }
