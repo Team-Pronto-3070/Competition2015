@@ -48,6 +48,15 @@ public class ProntoDrive extends Thread implements Pronstants {
 
 		/*
 		//PIDs
+<<<<<<< HEAD
+		PIDFrontLeft = new PIDController(Robot.KP, Robot.KI, Robot.KD, enFrontLeft,
+				new RateControllerMotor(motorFrontLeft));
+		PIDFrontRight = new PIDController(Robot.KP, Robot.KI, Robot.KD, enFrontRight,
+				new RateControllerMotor(motorFrontRight));
+		PIDBackLeft = new PIDController(Robot.KP, Robot.KI, Robot.KD, enBackLeft,
+				new RateControllerMotor(motorBackLeft));
+		PIDBackRight = new PIDController(Robot.KP, Robot.KI, Robot.KD, enBackRight,
+=======
 		PIDFrontLeft = new PIDController(KP, KI, KD, enFrontLeft,
 				new RateControllerMotor(motorFrontLeft));
 		PIDFrontRight = new PIDController(KP, KI, KD, enFrontRight,
@@ -55,6 +64,7 @@ public class ProntoDrive extends Thread implements Pronstants {
 		PIDBackLeft = new PIDController(KP, KI, KD, enBackLeft,
 				new RateControllerMotor(motorBackLeft));
 		PIDBackRight = new PIDController(KP, KI, KD, enBackRight,
+>>>>>>> 8b1b58db90f235520bb8594c2f24f5fcdbc9c4c3
 				new RateControllerMotor(motorBackRight));
 				
 		*/
