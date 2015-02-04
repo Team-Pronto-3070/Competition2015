@@ -78,14 +78,14 @@ public class ProntoLoader implements Pronstants {
 	}
 	
 	private static void loadIn() {
-		
+		loader.set(LOAD_SPEED);
 	}
 	
 	private static void loadOut() {
-		
+		loader.set(-LOAD_SPEED);
 	}
 	
 	private static void loadStop() {
-		
+		loader.set(0);
 	}
 }

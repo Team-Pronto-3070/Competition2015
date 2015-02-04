@@ -73,15 +73,15 @@ public class ProntoFlexer implements Pronstants {
 	}
 
 	private static void flexIn() {
-		
+		flexer.set(FLEX_SPEED);
 	}
 
 	private static void flexOut() {
-
+		flexer.set(-FLEX_SPEED);
 	}
 
 	private static void flexStop() {
-
+		flexer.set(0);
 	}
 
 }
