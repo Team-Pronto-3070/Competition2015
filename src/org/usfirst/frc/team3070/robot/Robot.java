@@ -17,9 +17,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	
 	//Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 	
-	ProntoDrive drive;
-	ProntoLift lift;
-	ProntoLoader loader;
+	// ProntoDrive drive;
+	// ProntoLift lift;
+	// ProntoLoader loader;
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2, mLoader;
 	Joystick xbox;
 	
@@ -38,13 +38,13 @@ public class Robot extends IterativeRobot implements Pronstants {
     	
     	xbox = new Joystick(JOYSTICK_PORT);
     	
-    	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, xbox);
-    	lift = new ProntoLift(mLift1, mLift2, xbox);
-    	loader = new ProntoLoader(mLoader, xbox);
+    	// drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, xbox);
+    	// lift = new ProntoLift(mLift1, mLift2, xbox);
+    	// loader = new ProntoLoader(mLoader, xbox);
     	
-    	drive.start();
-    	loader.start();
-    	lift.start();
+    	// drive.start();
+    	// loader.start();
+    	// lift.start();
     }
 
     /**
@@ -55,23 +55,23 @@ public class Robot extends IterativeRobot implements Pronstants {
     }
     
     public void teleopInit() {
-    	drive.setRun(true);
-    	loader.setRun(true);
-    	lift.setRun(true);
+    	// drive.setRun(true);
+    	// loader.setRun(true);
+    	// lift.setRun(true);
     }
     
     public void disabledInit() {
-    	if (drive != null) {
-    		drive.setRun(false);
-    	}
+    	// if (drive != null) {
+    	// 	drive.setRun(false);
+    	// }
     	
-    	if (lift != null) {
-    		lift.setRun(false);
-    	}
+    	// if (lift != null) {
+    	// 	lift.setRun(false);
+    	// }
     	
-    	if (loader != null) {
-    		loader.setRun(false);
-    	}
+    	// if (loader != null) {
+    	// 	loader.setRun(false);
+    	// }
     }
 
     /**
