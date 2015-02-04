@@ -18,10 +18,12 @@ public class Robot extends IterativeRobot implements Pronstants {
 	// Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
-			mLoader;
+			mLoader, mFlexer;
 	Joystick xbox;
 	RobotDrive mechDrive;
 	ProntoLift lifter;
+	ProntoLoader loader;
+	ProntoFlexer flexer;
 
 	double x, y, z;
 
@@ -37,12 +39,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift1 = new CANTalon(M_LIFT1_ID);
 		mLift2 = new CANTalon(M_LIFT2_ID);
 		mLoader = new CANTalon(M_LOADER_ID);
+		mFlexer = new CANTalon(M_FLEXER_ID);
 
 		xbox = new Joystick(JOYSTICK_PORT);
 		
 		mechDrive = new RobotDrive(mFrontLeft, mRearLeft, mFrontRight, mRearRight);
 
 		lifter = new ProntoLift(mLift1, mLift2, xbox);
+		loader = new ProntoLoader(mLoader, xbox);
+		flexer = new ProntoFlexer(mFlexer, xbox);
 
 		x = 0.0;
 		y = 0.0;
@@ -58,6 +63,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	public void disabledInit() {
 		lifter.stopPeriodic();
+		loader.stopPeriodic();
+		flexer.stopPeriodic();
 	}
 
 	/**
@@ -69,6 +76,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = xbox.getRawAxis(RIGHT_X);
 		
 		lifter.periodic();
+		loader.periodic();
+		flexer.periodic();
+		
 		checkDeadzones();
 		
 		mechDrive.mecanumDrive_Cartesian(x, y, z, 0);

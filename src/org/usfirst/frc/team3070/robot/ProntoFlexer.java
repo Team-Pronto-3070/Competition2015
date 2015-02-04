@@ -11,10 +11,12 @@ public class ProntoFlexer implements Pronstants {
 
 	static SpeedController flexer;
 	static Joystick xbox;
+	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
 		flexer = f;
 		xbox = x;
+		state = Flexstates.FlexerStopped;
 	}
 
 	enum Flexstates implements Flexstate {
@@ -70,6 +72,14 @@ public class ProntoFlexer implements Pronstants {
 				return FlexerStopped;
 			}
 		}
+	}
+	
+	public void periodic() {
+		state = state.check();
+	}
+	
+	public void stopPeriodic() {
+		flexStop();
 	}
 
 	private static void flexIn() {

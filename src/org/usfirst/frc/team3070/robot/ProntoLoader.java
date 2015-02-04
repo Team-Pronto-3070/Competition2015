@@ -77,6 +77,14 @@ public class ProntoLoader implements Pronstants {
 		}
 	}
 	
+	public void periodic() {
+		state = state.check();
+	}
+	
+	public void stopPeriodic() {
+		loadStop();
+	}
+	
 	private static void loadIn() {
 		loader.set(LOAD_SPEED);
 	}

@@ -23,6 +23,7 @@ public interface Pronstants {
 	public static final int M_FRONT_LEFT_ID = 3;
 	public static final int M_REAR_RIGHT_ID = 4;
 	public static final int M_REAR_LEFT_ID = 5;
+	public static final int M_FLEXER_ID = 6;
 	public static final int M_LOADER_ID = 7;
 	public static final int M_LIFT1_ID = 8;
 	public static final int M_LIFT2_ID = 9;
