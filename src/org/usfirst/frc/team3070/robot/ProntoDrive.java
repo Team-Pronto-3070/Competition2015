@@ -73,13 +73,7 @@ public class ProntoDrive extends Thread implements Pronstants {
 	public void run() {
 		while (true) {
 			while (running) {
-				x = xbox.getRawAxis(LEFT_X);
-				y = xbox.getRawAxis(LEFT_Y);
-				z = xbox.getRawAxis(RIGHT_X);
 				
-				checkDeadzones();
-				
-				mechDrive.mecanumDrive_Cartesian(x, y, z, 0);
 
 				try {
 					Thread.sleep(20);
@@ -96,18 +90,6 @@ public class ProntoDrive extends Thread implements Pronstants {
 		}
 	}
 	
-	private void checkDeadzones() {
-		if (Math.abs(x) < DEADZONE) {
-			x = 0;
-		}
-
-		if (Math.abs(y) < DEADZONE) {
-			y = 0;
-		}
-
-		if (Math.abs(z) < DEADZONE) {
-			z = 0;
-		}
-	}
+	
 
 }
