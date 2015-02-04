@@ -12,7 +12,8 @@ public class ProntoLift implements Pronstants {
     static SpeedController motor1, motor2;
     static Joystick xbox;
     LiftState state;
-    enum LiftStates implements LiftState{
+    
+    enum LiftStates implements LiftState {
             Stopped {
                 @Override
                 public LiftState check() {
