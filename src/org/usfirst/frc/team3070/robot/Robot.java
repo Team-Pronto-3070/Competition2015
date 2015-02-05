@@ -44,6 +44,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		xbox = new Joystick(JOYSTICK_PORT);
 		
 		mechDrive = new RobotDrive(mFrontLeft, mRearLeft, mFrontRight, mRearRight);
+		
+		mechDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+		mechDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 
 		lifter = new ProntoLift(mLift1, mLift2, xbox);
 		loader = new ProntoLoader(mLoader, xbox);
