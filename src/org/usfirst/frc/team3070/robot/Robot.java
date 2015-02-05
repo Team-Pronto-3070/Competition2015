@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		flexer.periodic();
 		
 		checkDeadzones();
-		
+				
 		mechDrive.mecanumDrive_Cartesian(x, y, z, 0);
 	}
 
