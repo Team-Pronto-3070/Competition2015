@@ -20,10 +20,12 @@ public class Robot extends IterativeRobot implements Pronstants {
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
 	Joystick xbox;
-	RobotDrive mechDrive;
+	PIDMechDrive mechDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
+	
+	
 
 	double x, y, z;
 
@@ -42,11 +44,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mFlexer = new CANTalon(M_FLEXER_ID);
 
 		xbox = new Joystick(JOYSTICK_PORT);
-		
-		mechDrive = new RobotDrive(mFrontLeft, mRearLeft, mFrontRight, mRearRight);
-		
-		mechDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
-		mechDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+
+		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
+				mRearRight);
 
 		lifter = new ProntoLift(mLift1, mLift2, xbox);
 		loader = new ProntoLoader(mLoader, xbox);
@@ -77,14 +77,34 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = xbox.getRawAxis(LEFT_X);
 		y = xbox.getRawAxis(LEFT_Y);
 		z = xbox.getRawAxis(RIGHT_X);
-		
-		lifter.periodic();
-		loader.periodic();
-		flexer.periodic();
-		
-		checkDeadzones();
-				
-		mechDrive.mecanumDrive_Cartesian(x, y, z, 0);
+
+//		System.out.println(xbox.getPOV());
+
+		if (xbox.getPOV() == -1) {
+			mechDrive.drive(x, y, z);
+		} else {
+			switch (xbox.getPOV()) {
+			case 0:
+				mechDrive.drive(0, 0.5, 0);
+				break;
+			case 90:
+				mechDrive.drive(0.5, 0, 0);
+				break;
+			case 180:
+				mechDrive.drive(0, -0.5, 0);
+				break;
+			case 270:
+				mechDrive.drive(-0.5, 0, 0);
+				break;
+			default:
+				break;
+
+			}
+		}
+
+		// lifter.periodic();
+		// loader.periodic();
+		// flexer.periodic();
 	}
 
 	/**

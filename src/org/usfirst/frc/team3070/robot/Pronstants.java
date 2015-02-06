@@ -34,7 +34,7 @@ public interface Pronstants {
 	
 	// PID
 	// Ports used in: N/A
-	public static final double KP = 0.0125;
+	public static final double KP = 1.25; //0.0125;
 	public static final double KI = 0.0;
 	public static final double KD = 0.0;
 	
