@@ -37,6 +37,7 @@ public class PIDMechDrive implements Pronstants {
 	public void drive(double x, double y, double rotation) {
 		x = checkForDeadzone(x);
 		y = checkForDeadzone(-y);
+		// y inverted b/c y-axis on Joystick is negative for forward values
 		rotation = checkForDeadzone(rotation);
 		
 		x = convertToEncValue(x);
@@ -47,11 +48,26 @@ public class PIDMechDrive implements Pronstants {
 		frontRight.set(-x + y - rotation);		
 		rearLeft.set(-x + y + rotation);		
 		rearRight.set(x + y - rotation);	
-		
-		System.out.println("FL " + frontLeft.getEncVelocity());
-		System.out.println("FR " + frontRight.getEncVelocity());
-		System.out.println("RL " + rearLeft.getEncVelocity());
-		System.out.println("RR " + rearRight.getEncVelocity());
+	}
+	
+	public void dPadDrive(int pov) {
+		switch (pov) {
+		case DPAD_UP:
+			drive(0, 0.5, 0);
+			break;
+		case DPAD_RIGHT:
+			drive(0.5, 0, 0);
+			break;
+		case DPAD_DOWN:
+			drive(0, -0.5, 0);
+			break;
+		case DPAD_LEFT:
+			drive(-0.5, 0, 0);
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	private double checkForDeadzone(double a) {
@@ -64,7 +80,7 @@ public class PIDMechDrive implements Pronstants {
 	}
 
 	private double convertToEncValue(double x) {
-		return x * 1600;
+		return x * ENCODER_MAX_SPEED;
 	}
 
 }

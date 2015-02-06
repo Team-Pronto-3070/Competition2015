@@ -24,8 +24,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
-	
-	
 
 	double x, y, z;
 
@@ -78,33 +76,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 		y = xbox.getRawAxis(LEFT_Y);
 		z = xbox.getRawAxis(RIGHT_X);
 
-//		System.out.println(xbox.getPOV());
-
-		if (xbox.getPOV() == -1) {
+		if (xbox.getPOV() == NO_DPAD_INPUT) {
 			mechDrive.drive(x, y, z);
 		} else {
-			switch (xbox.getPOV()) {
-			case 0:
-				mechDrive.drive(0, 0.5, 0);
-				break;
-			case 90:
-				mechDrive.drive(0.5, 0, 0);
-				break;
-			case 180:
-				mechDrive.drive(0, -0.5, 0);
-				break;
-			case 270:
-				mechDrive.drive(-0.5, 0, 0);
-				break;
-			default:
-				break;
-
-			}
+			mechDrive.dPadDrive(xbox.getPOV());
 		}
 
-		// lifter.periodic();
-		// loader.periodic();
-		// flexer.periodic();
+		lifter.periodic();
+		loader.periodic();
+		flexer.periodic();
 	}
 
 	/**
@@ -112,19 +92,5 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 */
 	public void testPeriodic() {
 
-	}
-
-	private void checkDeadzones() {
-		if (Math.abs(x) < DEADZONE) {
-			x = 0.0;
-		}
-
-		if (Math.abs(y) < DEADZONE) {
-			y = 0;
-		}
-
-		if (Math.abs(z) < DEADZONE) {
-			z = 0;
-		}
 	}
 }

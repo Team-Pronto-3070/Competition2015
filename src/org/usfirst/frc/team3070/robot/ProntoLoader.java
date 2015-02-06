@@ -23,10 +23,10 @@ public class ProntoLoader implements Pronstants {
 		LoaderStopped {
 			@Override
 			public Loadstate check() {
-				if (xbox.getRawButton(RIGHT_BUMPER))
+				if (xbox.getRawButton(A_BUTTON))
 					return StartLoadIn;
 
-				if (xbox.getRawButton(LEFT_BUMPER))
+				if (xbox.getRawButton(B_BUTTON))
 					return StartLoadOut;
 
 				// else

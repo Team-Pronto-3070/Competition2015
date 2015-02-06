@@ -9,6 +9,7 @@ public class ProntoLift implements Pronstants {
     interface LiftState {
         public LiftState check();
     }
+    
     static SpeedController motor1, motor2;
     static Joystick xbox;
     LiftState state;
@@ -17,9 +18,9 @@ public class ProntoLift implements Pronstants {
             Stopped {
                 @Override
                 public LiftState check() {
-                    if (xbox.getRawButton(A_BUTTON))
+                    if (xbox.getRawButton(RIGHT_BUMPER))
                         return StartLiftUp;
-                    if (xbox.getRawButton(B_BUTTON))
+                    if (xbox.getRawButton(LEFT_BUMPER))
                         return StartLiftDown;
                     return Stopped;
                 }
@@ -41,7 +42,7 @@ public class ProntoLift implements Pronstants {
             LiftingUp {
                 @Override
                 public LiftState check() {
-                    if (!xbox.getRawButton(A_BUTTON)) 
+                    if (!xbox.getRawButton(RIGHT_BUMPER)) 
                         return Stopping;
                     return LiftingUp;
                 }
@@ -49,7 +50,7 @@ public class ProntoLift implements Pronstants {
             LiftingDown {
                 @Override
                 public LiftState check() {
-                    if (!xbox.getRawButton(B_BUTTON)) 
+                    if (!xbox.getRawButton(LEFT_BUMPER)) 
                         return Stopping;
                     return LiftingDown;
                 }
