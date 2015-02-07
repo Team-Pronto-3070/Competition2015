@@ -47,6 +47,13 @@ public interface Pronstants {
 	public static final int M_LIFT1_ID = 8;
 	public static final int M_LIFT2_ID = 9;
 	
+	// Limit Switches
+	// used in ProntoLift.java
+	// ports are arbitrary at this moment
+	public static final int UPPER_LIMIT_ID = 1;
+	public static final int LOWER_LIMIT_ID = 2;
+	public static final int TOTE_LIMIT_ID = 3;
+	
 	// Joystick
 	// used in: Robot.java, PIDMechDrive.java
 	public static final int JOYSTICK_PORT = 1;
