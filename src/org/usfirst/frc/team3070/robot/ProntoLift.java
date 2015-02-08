@@ -82,17 +82,17 @@ public class ProntoLift implements Pronstants {
         liftStop();
     }
 
-    private static void liftUp() {
+    private static void liftUp() { // makes the totes go up
         motor1.set(LIFT_SPEED);
         motor2.set(-LIFT_SPEED);
     }
 
-    private static void liftDown() {
+    private static void liftDown() { // makes the totes go down
         motor1.set(-LIFT_SPEED);
         motor2.set(LIFT_SPEED);
     }
 
-    private static void liftStop() {
+    private static void liftStop() { // stops the totes from going up or down
         motor1.set(0);
         motor2.set(0);
     }
