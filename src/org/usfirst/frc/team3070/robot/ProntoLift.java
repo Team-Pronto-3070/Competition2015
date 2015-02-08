@@ -19,23 +19,23 @@ public class ProntoLift implements Pronstants {
                 @Override
                 public LiftState check() {
                     if (xbox.getRawButton(RIGHT_BUMPER))
-                        return StartLiftUp;
+                        return StartLiftUp; // make the totes go up
                     if (xbox.getRawButton(LEFT_BUMPER))
-                        return StartLiftDown;
+                        return StartLiftDown; // make the totes go down
                     return Stopped;
                 }
             },
             StartLiftUp {
                 @Override
                 public LiftState check() {
-                    liftUp();
+                    liftUp(); // make the totes go up
                     return LiftingUp;
                 }
             },
             StartLiftDown {
                 @Override
                 public LiftState check() {
-                    liftDown();
+                    liftDown(); // make the totes go down
                     return LiftingDown;
                 }
             },
@@ -43,7 +43,7 @@ public class ProntoLift implements Pronstants {
                 @Override
                 public LiftState check() {
                     if (!xbox.getRawButton(RIGHT_BUMPER)) 
-                        return Stopping;
+                        return Stopping; // stop the totes if you press the right bumper
                     return LiftingUp;
                 }
             },
@@ -51,14 +51,14 @@ public class ProntoLift implements Pronstants {
                 @Override
                 public LiftState check() {
                     if (!xbox.getRawButton(LEFT_BUMPER)) 
-                        return Stopping;
+                        return Stopping; // stop the totes if you press the left bumper
                     return LiftingDown;
                 }
             },
             Stopping {
                 @Override
                 public LiftState check() {
-                    liftStop();
+                    liftStop(); // stop the totes
                     return Stopped;
                 }
             }
