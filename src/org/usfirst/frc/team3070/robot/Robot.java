@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -14,8 +13,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
  * directory.
  */
 public class Robot extends IterativeRobot implements Pronstants {
-
-	// Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
@@ -62,7 +59,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		CameraServer camera = CameraServer.getInstance();
+		camera.setQuality(10);
+		camera.startAutomaticCapture("cam0");
 	}
 
 	public void disabledInit() {
