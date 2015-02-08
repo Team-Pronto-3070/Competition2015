@@ -52,16 +52,16 @@ public class PIDMechDrive implements Pronstants {
 	
 	public void dPadDrive(int pov) {
 		switch (pov) {
-		case DPAD_UP:
+		case DPAD_UP: //if top is pressed
 			drive(0, 0.5, 0);
 			break;
-		case DPAD_RIGHT:
+		case DPAD_RIGHT: //if right is pressed
 			drive(0.5, 0, 0);
 			break;
-		case DPAD_DOWN:
+		case DPAD_DOWN: //if down is pressed
 			drive(0, -0.5, 0);
 			break;
-		case DPAD_LEFT:
+		case DPAD_LEFT: //if left is pressed
 			drive(-0.5, 0, 0);
 			break;
 		default:
@@ -71,7 +71,7 @@ public class PIDMechDrive implements Pronstants {
 	}
 
 	private double checkForDeadzone(double a) {
-		if (Math.abs(a) < DEADZONE) {
+		if (Math.abs(a) < DEADZONE) { //0.2
 			a = 0.0;
 		}
 		
@@ -80,7 +80,7 @@ public class PIDMechDrive implements Pronstants {
 	}
 
 	private double convertToEncValue(double x) {
-		return x * ENCODER_MAX_SPEED;
+		return x * ENCODER_MAX_SPEED; //1600
 	}
 
 }

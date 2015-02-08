@@ -51,7 +51,7 @@ public class ProntoLoader implements Pronstants {
 
 		LoadingIn {
 			public Loadstate check() {
-				if (!xbox.getRawButton(RIGHT_BUMPER))
+				if (!xbox.getRawButton(RIGHT_BUMPER)) //6
 					return LoaderStopping;
 				
 				// else
@@ -61,7 +61,7 @@ public class ProntoLoader implements Pronstants {
 
 		LoadingOut {
 			public Loadstate check() {
-				if (!xbox.getRawButton(LEFT_BUMPER))
+				if (!xbox.getRawButton(LEFT_BUMPER)) //5
 					return LoaderStopping;
 				
 				// else
@@ -86,11 +86,11 @@ public class ProntoLoader implements Pronstants {
 	}
 	
 	private static void loadIn() {
-		loader.set(LOAD_SPEED);
+		loader.set(LOAD_SPEED); //1.0
 	}
 	
 	private static void loadOut() {
-		loader.set(-LOAD_SPEED);
+		loader.set(-LOAD_SPEED); //1.0
 	}
 	
 	private static void loadStop() {

@@ -18,9 +18,9 @@ public class ProntoLift implements Pronstants {
             Stopped {
                 @Override
                 public LiftState check() {
-                    if (xbox.getRawButton(RIGHT_BUMPER))
+                    if (xbox.getRawButton(RIGHT_BUMPER))//6
                         return StartLiftUp;
-                    if (xbox.getRawButton(LEFT_BUMPER))
+                    if (xbox.getRawButton(LEFT_BUMPER))//5
                         return StartLiftDown;
                     return Stopped;
                 }
@@ -65,6 +65,7 @@ public class ProntoLift implements Pronstants {
     }
 
 
+    
     
 
     public ProntoLift(SpeedController m1, SpeedController m2, Joystick x) {

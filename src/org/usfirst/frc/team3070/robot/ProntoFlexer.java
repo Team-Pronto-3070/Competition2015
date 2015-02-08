@@ -90,8 +90,10 @@ public class ProntoFlexer implements Pronstants {
 		flexer.set(-FLEX_SPEED);
 	}
 
+	
+	                    
 	private static void flexStop() {
 		flexer.set(0);
 	}
-
+	
 }

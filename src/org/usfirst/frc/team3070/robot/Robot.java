@@ -24,7 +24,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
-
+	
 	double x, y, z;
 
 	/**
@@ -32,16 +32,18 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
-		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
-		mRearLeft = new CANTalon(M_REAR_LEFT_ID);
-		mRearRight = new CANTalon(M_REAR_RIGHT_ID);
-		mLift1 = new CANTalon(M_LIFT1_ID);
-		mLift2 = new CANTalon(M_LIFT2_ID);
-		mLoader = new CANTalon(M_LOADER_ID);
-		mFlexer = new CANTalon(M_FLEXER_ID);
+		
+		//these are the ports
+		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
+		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //2
+		mRearLeft = new CANTalon(M_REAR_LEFT_ID); //5
+		mRearRight = new CANTalon(M_REAR_RIGHT_ID) ;//4
+		mLift1 = new CANTalon(M_LIFT1_ID); //8
+		mLift2 = new CANTalon(M_LIFT2_ID); //9
+		mLoader = new CANTalon(M_LOADER_ID); //7
+		mFlexer = new CANTalon(M_FLEXER_ID); //6
 
-		xbox = new Joystick(JOYSTICK_PORT);
+		xbox = new Joystick(JOYSTICK_PORT);//1
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
@@ -50,6 +52,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		loader = new ProntoLoader(mLoader, xbox);
 		flexer = new ProntoFlexer(mFlexer, xbox);
 
+		
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
@@ -72,10 +75,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		x = xbox.getRawAxis(LEFT_X);
-		y = xbox.getRawAxis(LEFT_Y);
-		z = xbox.getRawAxis(RIGHT_X);
+		x = xbox.getRawAxis(LEFT_X);//0
+		y = xbox.getRawAxis(LEFT_Y);//1
+		z = xbox.getRawAxis(RIGHT_X);//4
 
+
+		
+		//.getPOV() gets info from the dpad, looks like a +
+		
+		                           //-1
 		if (xbox.getPOV() == NO_DPAD_INPUT) {
 			mechDrive.drive(x, y, z);
 		} else {
