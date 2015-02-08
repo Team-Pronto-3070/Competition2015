@@ -60,7 +60,7 @@ public interface Pronstants {
 	
 	// Static velocities
 	// used in: all classes
-	public static final double LIFT_SPEED = .6;
+	public static final double LIFT_SPEED = 1;
 	public static final double LOAD_SPEED = 1.0;
 	public static final double FLEX_SPEED = 1.0;
 	public static final int ENCODER_MAX_SPEED = 1600;
