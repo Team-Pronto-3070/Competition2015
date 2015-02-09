@@ -48,15 +48,13 @@ public interface Pronstants {
 	public static final int M_LIFT2_ID = 9;
 	
 	// Joystick
-<<<<<<< HEAD
 	// Ports used in: Robot.java
 	public static final int J_LEFT_PORT = 1;
 	public static final int J_RIGHT_PORT = 2;
-=======
+
 	// used in: Robot.java, PIDMechDrive.java
 	public static final int JOYSTICK_PORT = 1;
 	public static final double DEADZONE = 0.2;
->>>>>>> master
 	
 	// PID
 	// used in: PIDMechDrive.java
@@ -64,18 +62,10 @@ public interface Pronstants {
 	public static final double KI = 0.0;
 	public static final double KD = 0.0;
 	
-<<<<<<< HEAD
-	
-	public static final double DEADZONE = 0.15;
-	public static final double LIFT_SPEED = 1.0;
-
-=======
 	// Static velocities
 	// used in: all classes
-	public static final double LIFT_SPEED = 1;
+	public static final double LIFT_SPEED = 1.0;
 	public static final double LOAD_SPEED = 1.0;
 	public static final double FLEX_SPEED = 1.0;
 	public static final int ENCODER_MAX_SPEED = 1600;
->>>>>>> master
-
 }
