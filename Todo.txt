@@ -1,9 +1,0 @@
-Todo List
-
-1. For encoder constructors, use (int aChannel, int bChannel, boolean reverseDirection)
-
-2. Find raw count of encoder pulses in one revolution
-
-3. setDistancePerPulse bases on pulses per revolution
-
-4. check rates (rates will be in
