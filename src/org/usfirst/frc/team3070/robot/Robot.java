@@ -17,9 +17,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 	
 	//Encoder enFrontLeft, enFrontRight, enBackLeft, enBackRight;
 	
-	ProntoDrive drive;
-	ProntoLift lift;
-	ProntoLoader loader;
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2, mLoader;
 	Joystick jLeft, jRight;
 	
@@ -38,14 +35,6 @@ public class Robot extends IterativeRobot implements Pronstants {
     	
     	jLeft = new Joystick(J_LEFT_PORT);
     	jRight = new Joystick(J_RIGHT_PORT);
-    	
-    	drive = new ProntoDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight, jLeft, jRight);
-    	lift = new ProntoLift(mLift1, mLift2, jLeft, jRight);
-    	loader = new ProntoLoader(mLoader, jRight);
-    	
-    	drive.start();
-    	loader.start();
-    	lift.start();
     }
 
     /**
@@ -55,38 +44,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 
     }
     
-    public void teleopInit() {
-    	drive.setRun(true);
-    	loader.setRun(true);
-    	lift.setRun(true);
-    }
-    
     public void disabledInit() {
-    	if (drive != null) {
-    		drive.setRun(false);
-    	}
     	
-    	if (lift != null) {
-    		lift.setRun(false);
-    	}
-    	
-    	if (loader != null) {
-    		loader.setRun(false);
-    	}
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	/*
-    	 * A = lift up
-    	 * B = lift down
-    	 * 
-    	 * LB = draw in
-    	 * RB = out
-    	 */
-        
+    	
     }
     
     /**
