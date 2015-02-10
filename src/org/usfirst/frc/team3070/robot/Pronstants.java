@@ -1,39 +1,22 @@
 package org.usfirst.frc.team3070.robot;
 
 public interface Pronstants {
-	
-	// Joystick Axes
-	// used in: ProntoDrive.java, ProntoLift.java
-	public static final int LEFT_X = 0;
-	public static final int LEFT_Y = 1;
-	public static final int LEFT_TRIGGER = 2;
-	public static final int RIGHT_TRIGGER = 3;
-	public static final int RIGHT_X = 4;
-	public static final int RIGHT_Y = 5;
-	
-	// DPad input
-	// used in ProntoDrive.java
-	public static final int NO_DPAD_INPUT = -1; // DPad default position
-	public static final int DPAD_UP = 0;
-	public static final int DPAD_RIGHT = 90;
-	public static final int DPAD_DOWN = 180;
-	public static final int DPAD_LEFT = 270;
-	
-	// Joystick Buttons
-	// used in: ProntoLoader.java, ProntoLift.java, ProntoFlexer.java
-	public static final int A_BUTTON = 1; // Load in
-	public static final int B_BUTTON = 2; // Load out
-	public static final int X_BUTTON = 3; // Flex in
-	public static final int Y_BUTTON = 4; // Flex out
-	public static final int LEFT_BUMPER = 5; // Lift down
-	public static final int RIGHT_BUMPER = 6; // Lift up
+	/*
+	 * Occupied Buttons:
+	 * Left Joystick:
+	 * Trigger - Load out
+	 * 2 - Expand loader
+	 * 3 - Contract loader
+	 * 
+	 * Right Joystick:
+	 * Trigger - Load in
+	 * 2 - Lift down
+	 * 3 - Lift up
+	 */
 	
 	/* Joystick Notes:
 	 * Triggers only go in the positive.
 	 * Forward on the Y-Axes is in the negative
-	 * 
-	 * DPad counts in degrees increasing going clockwise
-	 * 0 degrees is DPad up
 	 */
 	
 	// CANTalons
@@ -53,7 +36,8 @@ public interface Pronstants {
 	public static final int J_RIGHT_PORT = 2;
 
 	// used in: Robot.java, PIDMechDrive.java
-	public static final int JOYSTICK_PORT = 1;
+	public static final int LEFT_JOYSTICK_PORT = 1;
+	public static final int RIGHT_JOYSTICK_PORT = 2;
 	public static final double DEADZONE = 0.2;
 	
 	// PID

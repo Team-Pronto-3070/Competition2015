@@ -11,16 +11,16 @@ public class ProntoLift implements Pronstants {
     }
     
     static SpeedController motor1, motor2;
-    static Joystick xbox;
+    static Joystick jRight;
     LiftState state;
     
     enum LiftStates implements LiftState {
             Stopped {
                 @Override
                 public LiftState check() {
-                    if (xbox.getRawButton(RIGHT_BUMPER))
+                    if (jRight.getRawButton(3))
                         return StartLiftUp; // make the totes go up
-                    if (xbox.getRawButton(LEFT_BUMPER))
+                    if (jRight.getRawButton(2))
                         return StartLiftDown; // make the totes go down
                     return Stopped;
                 }
@@ -42,7 +42,7 @@ public class ProntoLift implements Pronstants {
             LiftingUp {
                 @Override
                 public LiftState check() {
-                    if (!xbox.getRawButton(RIGHT_BUMPER)) 
+                    if (!jRight.getRawButton(3)) 
                         return Stopping; // stop the totes if you press the right bumper
                     return LiftingUp;
                 }
@@ -50,7 +50,7 @@ public class ProntoLift implements Pronstants {
             LiftingDown {
                 @Override
                 public LiftState check() {
-                    if (!xbox.getRawButton(LEFT_BUMPER)) 
+                    if (!jRight.getRawButton(2)) 
                         return Stopping; // stop the totes if you press the left bumper
                     return LiftingDown;
                 }
@@ -70,7 +70,7 @@ public class ProntoLift implements Pronstants {
     public ProntoLift(SpeedController m1, SpeedController m2, Joystick x) {
         motor1 = m1;
         motor2 = m2;
-        xbox = x;
+        jRight = x;
         state = LiftStates.Stopped;
     }
 

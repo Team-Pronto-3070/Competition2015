@@ -49,26 +49,6 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.set(-x + y + rotation);		
 		rearRight.set(x + y - rotation);	
 	}
-	
-	public void dPadDrive(int pov) {
-		switch (pov) {
-		case DPAD_UP:
-			drive(0, 0.5, 0);
-			break;
-		case DPAD_RIGHT:
-			drive(0.5, 0, 0);
-			break;
-		case DPAD_DOWN:
-			drive(0, -0.5, 0);
-			break;
-		case DPAD_LEFT:
-			drive(-0.5, 0, 0);
-			break;
-		default:
-			break;
-
-		}
-	}
 
 	private double checkForDeadzone(double a) {
 		if (Math.abs(a) < DEADZONE) {

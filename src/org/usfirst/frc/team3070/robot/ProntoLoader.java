@@ -10,12 +10,13 @@ public class ProntoLoader implements Pronstants {
 	}
 
 	static SpeedController loader, flexer;
-	static Joystick xbox;
+	static Joystick jLeft, jRight;
 	Loadstate state;
 	
-	public ProntoLoader(SpeedController l, Joystick x) {
+	public ProntoLoader(SpeedController l, Joystick jL, Joystick jR) {
 		loader = l;
-		xbox = x;
+		jLeft = jL;
+		jRight = jR;
 		state = Loadstates.LoaderStopped;
 	}
 
@@ -23,10 +24,10 @@ public class ProntoLoader implements Pronstants {
 		LoaderStopped {
 			@Override
 			public Loadstate check() {
-				if (xbox.getRawButton(A_BUTTON))
+				if (jRight.getRawButton(1))
 					return StartLoadIn;
 
-				if (xbox.getRawButton(B_BUTTON))
+				if (jLeft.getRawButton(1))
 					return StartLoadOut;
 
 				// else
@@ -51,7 +52,7 @@ public class ProntoLoader implements Pronstants {
 
 		LoadingIn {
 			public Loadstate check() {
-				if (!xbox.getRawButton(RIGHT_BUMPER))
+				if (!jRight.getRawButton(1))
 					return LoaderStopping;
 				
 				// else
@@ -61,7 +62,7 @@ public class ProntoLoader implements Pronstants {
 
 		LoadingOut {
 			public Loadstate check() {
-				if (!xbox.getRawButton(LEFT_BUMPER))
+				if (!jLeft.getRawButton(1))
 					return LoaderStopping;
 				
 				// else

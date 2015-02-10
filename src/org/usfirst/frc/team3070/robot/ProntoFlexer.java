@@ -10,21 +10,21 @@ public class ProntoFlexer implements Pronstants {
 	}
 
 	static SpeedController flexer;
-	static Joystick xbox;
+	static Joystick jLeft;
 	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
 		flexer = f;
-		xbox = x;
+		jLeft = x;
 		state = Flexstates.FlexerStopped;
 	}
 
 	enum Flexstates implements Flexstate {
 		FlexerStopped {
 			public Flexstate check() {
-				if (xbox.getRawButton(X_BUTTON))
+				if (jLeft.getRawButton(3))
 					return StartFlexIn;
-				if (xbox.getRawButton(Y_BUTTON))
+				if (jLeft.getRawButton(2))
 					return StartFlexOut;
 
 				// else
@@ -48,7 +48,7 @@ public class ProntoFlexer implements Pronstants {
 
 		FlexingIn {
 			public Flexstate check() {
-				if (!xbox.getRawButton(X_BUTTON))
+				if (!jLeft.getRawButton(3))
 					return FlexerStopping;
 
 				// else
@@ -58,7 +58,7 @@ public class ProntoFlexer implements Pronstants {
 
 		FlexingOut {
 			public Flexstate check() {
-				if (!xbox.getRawButton(Y_BUTTON))
+				if (!jLeft.getRawButton(2))
 					return FlexerStopping;
 
 				// else

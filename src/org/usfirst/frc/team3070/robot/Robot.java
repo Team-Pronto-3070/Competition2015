@@ -16,7 +16,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
-	Joystick xbox;
+	Joystick jLeft, jRight;
 	PIDMechDrive mechDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
@@ -38,14 +38,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
 
-		xbox = new Joystick(JOYSTICK_PORT);
+		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
+		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
 
-		lifter = new ProntoLift(mLift1, mLift2, xbox);
-		loader = new ProntoLoader(mLoader, xbox);
-		flexer = new ProntoFlexer(mFlexer, xbox);
+		lifter = new ProntoLift(mLift1, mLift2, jRight);
+		loader = new ProntoLoader(mLoader, jLeft, jRight);
+		flexer = new ProntoFlexer(mFlexer, jLeft);
 
 		x = 0.0;
 		y = 0.0;
@@ -71,15 +72,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		x = xbox.getRawAxis(LEFT_X);
-		y = xbox.getRawAxis(LEFT_Y);
-		z = xbox.getRawAxis(RIGHT_X);
+		x = jLeft.getX();
+		y = jLeft.getY();
+		z = jRight.getX();
 
-		if (xbox.getPOV() == NO_DPAD_INPUT) {
-			mechDrive.drive(x, y, z);
-		} else {
-			mechDrive.dPadDrive(xbox.getPOV());
-		}
+		mechDrive.drive(x, y, z);
 
 		lifter.periodic();
 		loader.periodic();
