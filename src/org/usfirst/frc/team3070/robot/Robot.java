@@ -1,9 +1,6 @@
 package org.usfirst.frc.team3070.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,14 +26,14 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
-		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
-		mRearLeft = new CANTalon(M_REAR_LEFT_ID);
-		mRearRight = new CANTalon(M_REAR_RIGHT_ID);
-		mLift1 = new CANTalon(M_LIFT1_ID);
-		mLift2 = new CANTalon(M_LIFT2_ID);
-		mLoader = new CANTalon(M_LOADER_ID);
-		mFlexer = new CANTalon(M_FLEXER_ID);
+		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //port 3
+		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //port 2
+		mRearLeft = new CANTalon(M_REAR_LEFT_ID); //port 5
+		mRearRight = new CANTalon(M_REAR_RIGHT_ID); //port 4
+		mLift1 = new CANTalon(M_LIFT1_ID); //port 8
+		mLift2 = new CANTalon(M_LIFT2_ID); //port 9
+		mLoader = new CANTalon(M_LOADER_ID); //port 7
+		mFlexer = new CANTalon(M_FLEXER_ID); //port 6
 
 		xbox = new Joystick(JOYSTICK_PORT);
 
@@ -70,11 +67,13 @@ public class Robot extends IterativeRobot implements Pronstants {
 	/**
 	 * This function is called periodically during operator control
 	 */
+	//
 	public void teleopPeriodic() {
 		x = xbox.getRawAxis(LEFT_X);
 		y = xbox.getRawAxis(LEFT_Y);
 		z = xbox.getRawAxis(RIGHT_X);
 
+		//sets mechanum drive to dpad value and if !pressed sets to joystick values
 		if (xbox.getPOV() == NO_DPAD_INPUT) {
 			mechDrive.drive(x, y, z);
 		} else {
