@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -72,6 +73,13 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Forward Left Voltage: ", mFrontLeft.getOutputVoltage());
+		SmartDashboard.putNumber("Forward Right Voltage: ", mFrontRight.getOutputVoltage());
+		SmartDashboard.putNumber("Rear Left Voltage: ", mRearLeft.getOutputVoltage());
+		SmartDashboard.putNumber("Rear Right Voltage: ", mRearRight.getOutputVoltage());
+		SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
+		// I don't know why this doesn't work D:
+		
 		x = jLeft.getX();
 		y = jLeft.getY();
 		z = jRight.getX();
