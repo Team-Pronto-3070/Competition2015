@@ -73,11 +73,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Forward Left Voltage: ", mFrontLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Forward Right Voltage: ", mFrontRight.getOutputVoltage());
-		SmartDashboard.putNumber("Rear Left Voltage: ", mRearLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Rear Right Voltage: ", mRearRight.getOutputVoltage());
-		SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
+		// SmartDashboard.putNumber("Forward Left Voltage: ", mFrontLeft.getOutputVoltage());
+		// SmartDashboard.putNumber("Forward Right Voltage: ", mFrontRight.getOutputVoltage());
+		// SmartDashboard.putNumber("Rear Left Voltage: ", mRearLeft.getOutputVoltage());
+		// SmartDashboard.putNumber("Rear Right Voltage: ", mRearRight.getOutputVoltage());
+		// SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
 		// I don't know why this doesn't work D:
 		
 		x = jLeft.getX();
