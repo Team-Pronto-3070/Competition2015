@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = jRight.getX();
 
 		mechDrive.drive(x, y, z);
-
+		
 		lifter.periodic();
 		loader.periodic();
 		flexer.periodic();

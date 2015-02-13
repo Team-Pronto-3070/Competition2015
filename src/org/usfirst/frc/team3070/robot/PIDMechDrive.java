@@ -17,8 +17,10 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
 		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
 		
-		frontRight.reverseSensor(true);
-		rearRight.reverseSensor(true);
+		frontRight.reverseSensor(false);
+		rearRight.reverseSensor(false);
+		frontLeft.reverseSensor(true);
+		rearLeft.reverseSensor(true);
 		
 		frontLeft.reverseOutput(true);
 		rearLeft.reverseOutput(true);
@@ -36,7 +38,7 @@ public class PIDMechDrive implements Pronstants {
 	
 	public void drive(double x, double y, double rotation) {
 		x = checkForDeadzone(x);
-		y = checkForDeadzone(-y);
+		y = checkForDeadzone(y);
 		// y inverted b/c y-axis on Joystick is negative for forward values
 		rotation = checkForDeadzone(rotation);
 		
