@@ -5,8 +5,7 @@ public interface Pronstants {
 	 * Occupied Buttons:
 	 * Left Joystick:
 	 * Trigger - Load out
-	 * 2 - Expand loader
-	 * 3 - Contract loader
+	 * 3 - Expand/Contract loader
 	 * 
 	 * Right Joystick:
 	 * Trigger - Load in
