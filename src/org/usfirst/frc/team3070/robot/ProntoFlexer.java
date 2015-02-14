@@ -11,28 +11,40 @@ public class ProntoFlexer implements Pronstants {
 
 	static SpeedController flexer;
 	static Joystick jLeft;
+	static int timeCounter;
 	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
 		flexer = f;
 		jLeft = x;
-		state = Flexstates.FlexerStopped;
+		state = Flexstates.FlexerStoppedExpanded;
+		timeCounter = 0;
 	}
 
 	enum Flexstates implements Flexstate {
-		FlexerStopped {
+		FlexerStoppedExpanded {
+			@Override
 			public Flexstate check() {
 				if (jLeft.getRawButton(3))
 					return StartFlexIn;
-				if (jLeft.getRawButton(2))
-					return StartFlexOut;
 
 				// else
-				return FlexerStopped;
+				return FlexerStoppedExpanded;
+			}
+		},
+		FlexerStoppedContracted {
+			@Override
+			public Flexstate check() {
+				if (jLeft.getRawButton(3))
+					return StartFlexOut;
+				
+				// else
+				return FlexerStoppedContracted;
 			}
 		},
 
 		StartFlexIn {
+			@Override
 			public Flexstate check() {
 				flexIn();
 				return FlexingIn;
@@ -40,6 +52,7 @@ public class ProntoFlexer implements Pronstants {
 		},
 
 		StartFlexOut {
+			@Override
 			public Flexstate check() {
 				flexOut();
 				return FlexingOut;
@@ -47,29 +60,44 @@ public class ProntoFlexer implements Pronstants {
 		},
 
 		FlexingIn {
+			@Override
 			public Flexstate check() {
-				if (!jLeft.getRawButton(3))
-					return FlexerStopping;
+				if (timeCounter >= ONE_SECOND)
+					return FlexerStoppingIn;
 
 				// else
+				timeCounter++;
 				return FlexingIn;
 			}
 		},
 
 		FlexingOut {
+			@Override
 			public Flexstate check() {
-				if (!jLeft.getRawButton(2))
-					return FlexerStopping;
+				if (timeCounter >= ONE_SECOND)
+					return FlexerStoppingOut;
 
 				// else
+				timeCounter++;
 				return FlexingOut;
 			}
 		},
 
-		FlexerStopping {
+		FlexerStoppingIn {
+			@Override
 			public Flexstate check() {
 				flexStop();
-				return FlexerStopped;
+				timeCounter = 0;
+				return FlexerStoppedContracted;
+			}
+		},
+		
+		FlexerStoppingOut {
+			@Override
+			public Flexstate check() {
+				flexStop();
+				timeCounter = 0;
+				return FlexerStoppedExpanded;
 			}
 		}
 	}
