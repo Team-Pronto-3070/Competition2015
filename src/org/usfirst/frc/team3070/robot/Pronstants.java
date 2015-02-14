@@ -5,8 +5,7 @@ public interface Pronstants {
 	 * Occupied Buttons:
 	 * Left Joystick:
 	 * Trigger - Load out
-	 * 2 - Expand loader
-	 * 3 - Contract loader
+	 * 3 - Expand/Contract loader
 	 * 
 	 * Right Joystick:
 	 * Trigger - Load in
@@ -52,4 +51,5 @@ public interface Pronstants {
 	public static final double LOAD_SPEED = 1.0;
 	public static final double FLEX_SPEED = 1.0;
 	public static final int ENCODER_MAX_SPEED = 1600;
+	public static final int ONE_SECOND = 500;
 }
