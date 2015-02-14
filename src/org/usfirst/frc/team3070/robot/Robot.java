@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	
 	double x, y, z;
 
+	int autoState;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -53,15 +54,37 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
+		
+		autoState = 0;
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		CameraServer camera = CameraServer.getInstance();
+		/*CameraServer camera = CameraServer.getInstance();
 		camera.setQuality(10);
-		camera.startAutomaticCapture("cam0");
+		camera.startAutomaticCapture("cam0");*/
+		
+		if(autoState == 0){
+		//drive forward
+			driveStraight(50);
+		}
+		if(autoState == 1){
+		//lift crate up
+			Lift(10);
+		}
+		if(autoState == 2){
+		//drive backward
+			driveStraight(-100);
+		}
+		if(autoState == 3){
+		//set crate down
+			Lift(-10);
+		}
+		if(autoState == 4){
+			driveStraight(-30);
+		}
 	}
 
 	public void disabledInit() {
@@ -99,5 +122,28 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 */
 	public void testPeriodic() {
 
+	}
+	
+	public void driveStraight(double x){
+		for(int i=0; i<Math.abs(x); i++){
+			mFrontLeft.set(.5);
+			mFrontRight.set(-.5);
+			mRearLeft.set(.5);
+			mRearRight.set(-.5);
+		}
+		mFrontLeft.set(0);
+		mFrontRight.set(0);
+		mRearLeft.set(0);
+		mRearRight.set(0);
+		autoState++;
+	}
+	public void Lift(double x){
+		for(int i=0; i<Math.abs(x); i++){
+			mLift1.set(.5);
+			mLift2.set(-.5);
+		}
+		mLift1.set(0);
+		mLift2.set(0);
+		autoState++;
 	}
 }
