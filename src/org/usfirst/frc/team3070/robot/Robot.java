@@ -38,7 +38,14 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift2 = new CANTalon(M_LIFT2_ID);
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
-
+		
+		/*
+		mFrontLeft.setVoltageRampRate(5.0);
+		mFrontRight.setVoltageRampRate(5.0);
+		mRearLeft.setVoltageRampRate(5.0);
+		mRearRight.setVoltageRampRate(5.0);
+		*/
+		
 		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
 		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
 
@@ -85,6 +92,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = jRight.getX();
 
 		mechDrive.drive(x, y, z);
+		
+		System.out.println("FL: " + mFrontLeft.getOutputVoltage());
+		System.out.println("FR: " + mFrontRight.getOutputVoltage());
+		System.out.println("BL: " + mRearLeft.getOutputVoltage());
+		System.out.println("BR: " + mRearRight.getOutputVoltage());
 		
 		lifter.periodic();
 		loader.periodic();
