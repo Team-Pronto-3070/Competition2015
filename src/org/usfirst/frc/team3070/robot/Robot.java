@@ -65,25 +65,29 @@ public class Robot extends IterativeRobot implements Pronstants {
 		/*CameraServer camera = CameraServer.getInstance();
 		camera.setQuality(10);
 		camera.startAutomaticCapture("cam0");*/
-		
-		if(autoState == 0){
+		switch (autoState) {
+		case 0:
 		//drive forward
-			driveStraight(50);
-		}
-		if(autoState == 1){
+			driveStraight(30);
+			break;
+		case 1:
 		//lift crate up
-			Lift(10);
-		}
-		if(autoState == 2){
+			Lift(30);
+			break;
+		case 2:
 		//drive backward
 			driveStraight(-100);
-		}
-		if(autoState == 3){
+			break;
+		case 3:
 		//set crate down
-			Lift(-10);
-		}
-		if(autoState == 4){
-			driveStraight(-30);
+			Lift(-35);
+			break;
+		case 4:
+		//drive backward
+			driveStraight(-50);
+			break;
+		default:
+			break;	
 		}
 	}
 
