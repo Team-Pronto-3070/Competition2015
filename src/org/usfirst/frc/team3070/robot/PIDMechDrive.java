@@ -44,7 +44,7 @@ public class PIDMechDrive implements Pronstants {
 		y = checkForDeadzone(y);
 		// y inverted b/c y-axis on Joystick is negative for forward values
 		rotation = checkForDeadzone(-rotation);
-		speedCoeff = spdLvl;
+		speedCoeff = convertToSpeedLevel(spdLvl);
 		
 		x = convertToEncValue(x);
 		y = convertToEncValue(y);
@@ -67,6 +67,18 @@ public class PIDMechDrive implements Pronstants {
 
 	private double convertToEncValue(double x) {
 		return x * ENCODER_MAX_SPEED * speedCoeff;
+	}
+	
+	private double convertToSpeedLevel(double x) {
+		if (x < 0) {
+			x = (x * -0.5) + 0.5;
+		} else if (x > 0) {
+			x = 0.5 - (x * 0.5);
+		} else {
+			x = 0.5;
+		}
+		
+		return x;
 	}
 
 }
