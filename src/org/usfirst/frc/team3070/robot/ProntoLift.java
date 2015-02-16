@@ -1,99 +1,136 @@
 package org.usfirst.frc.team3070.robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
 
+public class ProntoLift implements Pronstants{
 
-public class ProntoLift implements Pronstants {
+	interface LiftState {
+		public LiftState check();
+	}
+	
+	static CANTalon motor1, motor2;
+	static Joystick jRight;
+	static DigitalInput lower, upper, tote;
+	static boolean notAtTop, notAtBottom, readyForNextTote;
+	static int toteCount;
+	LiftState state;
 
-    interface LiftState {
-        public LiftState check();
-    }
-    
-    static SpeedController motor1, motor2;
-    static Joystick jRight;
-    LiftState state;
-    
-    enum LiftStates implements LiftState {
-            Stopped {
-                @Override
-                public LiftState check() {
-                    if (jRight.getRawButton(3))
-                        return StartLiftUp; // make the totes go up
-                    if (jRight.getRawButton(2))
-                        return StartLiftDown; // make the totes go down
-                    return Stopped;
-                }
-            },
-            StartLiftUp {
-                @Override
-                public LiftState check() {
-                    liftUp(); // make the totes go up
-                    return LiftingUp;
-                }
-            },
-            StartLiftDown {
-                @Override
-                public LiftState check() {
-                    liftDown(); // make the totes go down
-                    return LiftingDown;
-                }
-            },
-            LiftingUp {
-                @Override
-                public LiftState check() {
-                    if (!jRight.getRawButton(3)) 
-                        return Stopping; // stop the totes if you press the right bumper
-                    return LiftingUp;
-                }
-            },
-            LiftingDown {
-                @Override
-                public LiftState check() {
-                    if (!jRight.getRawButton(2)) 
-                        return Stopping; // stop the totes if you press the left bumper
-                    return LiftingDown;
-                }
-            },
-            Stopping {
-                @Override
-                public LiftState check() {
-                    liftStop(); // stop the totes
-                    return Stopped;
-                }
-            }
-    }
+	public ProntoLift(CANTalon m1, CANTalon m2, DigitalInput u, DigitalInput l,
+			DigitalInput t, Joystick r) {
+		motor1 = m1;
+		motor2 = m2;
+		lower = l;
+		upper = u;
+		tote = t;
+		jRight = r;
+		notAtTop = true;
+		notAtBottom = true;
+		toteCount = 0;
+		
+		state = LiftStates.Stopped;
+	}
 
+	enum LiftStates implements LiftState {
+		Stopped {
+			@Override
+			public LiftState check() {
+				if (notAtTop && jRight.getRawButton(3)) {
+					return StartLiftUp;
+				}
 
-    
+				if (notAtBottom && jRight.getRawButton(2)) {
+					return StartLiftDown;
+				}
 
-    public ProntoLift(SpeedController m1, SpeedController m2, Joystick x) {
-        motor1 = m1;
-        motor2 = m2;
-        jRight = x;
-        state = LiftStates.Stopped;
-    }
+				return Stopped;
+			}
+		},
+		StartLiftUp {
+			@Override
+			public LiftState check() {
+				lift(LIFT_SPEED);
+				notAtBottom = true;
+				return LiftingUp;
+			}
+		},
+		LiftingUp {
+			@Override
+			public LiftState check() {
+				if (!upper.get()) {
+					notAtTop = false;
+					return Stopping;
+				}
+				
+				if (!tote.get()) {
+					return WaitForRelease;
+				}
+				
+				if (!jRight.getRawButton(3)) {
+					return Stopping;
+				}
+				
+				return LiftingUp;
+			}
+		},
+		WaitForRelease {
+			@Override
+			public LiftState check() {
+				if (!tote.get()) {
+					lift(.5);
+				} else {
+					lift(0);
+				}
+				if (!jRight.getRawButton(3)) {
+					return Stopping;
+				}
+				
+				return WaitForRelease;
+			}
+		},
+		StartLiftDown {
+			@Override
+			public LiftState check() {
+				lift(-LIFT_SPEED);
+				notAtTop = true;
+				return LiftingDown;
+			}
+		},
+		LiftingDown {
+			@Override
+			public LiftState check() {
+				if (!lower.get()) {
+					notAtBottom = false;
+					return Stopping;
+				}
+				
+				if (!jRight.getRawButton(2))
+					return Stopping;
+				
+				return LiftingDown;
+			}
+		},
+		Stopping {
+			@Override
+			public LiftState check() {
+				lift(0);
+				return Stopped;
+			}
+		}
+	}
+	
+	public void periodic() {
+		state = state.check();
+	}
+	
+	public void stopPeriodic() {
+		lift(0);
+	}
+	
+	private static void lift(double speed) {
+		motor1.set(-speed);
+		motor2.set(speed);
+	}
 
-    public void periodic() {
-        state = state.check();
-    }
-
-    public void stopPeriodic() {
-        liftStop();
-    }
-
-    private static void liftUp() { // makes the totes go up
-        motor1.set(LIFT_SPEED);
-        motor2.set(-LIFT_SPEED);
-    }
-
-    private static void liftDown() { // makes the totes go down
-        motor1.set(-LIFT_SPEED);
-        motor2.set(LIFT_SPEED);
-    }
-
-    private static void liftStop() { // stops the totes from going up or down
-        motor1.set(0);
-        motor2.set(0);
-    }
 }

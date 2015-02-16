@@ -3,7 +3,7 @@ package org.usfirst.frc.team3070.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
+	DigitalInput upperlimit, lowerlimit, totelimit;
 
 	double x, y, z;
 
@@ -41,11 +42,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
 		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
+		
+		upperlimit = new DigitalInput(1);
+		lowerlimit = new DigitalInput(2);
+		totelimit = new DigitalInput(3);
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
 
-		lifter = new ProntoLift(mLift1, mLift2, jRight);
+		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 
