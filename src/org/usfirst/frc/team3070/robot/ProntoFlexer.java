@@ -62,7 +62,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingIn {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= ONE_SECOND)
+				if (timeCounter >= NUM_SECONDS)
 					return FlexerStoppingIn;
 
 				// else
@@ -74,7 +74,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingOut {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= ONE_SECOND)
+				if (timeCounter >= NUM_SECONDS)
 					return FlexerStoppingOut;
 
 				// else

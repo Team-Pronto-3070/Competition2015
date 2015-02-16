@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3070.robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 
@@ -10,7 +11,7 @@ public class ProntoLift implements Pronstants {
         public LiftState check();
     }
     
-    static SpeedController motor1, motor2;
+    static CANTalon motor1, motor2;
     static Joystick jRight;
     LiftState state;
     
@@ -67,11 +68,14 @@ public class ProntoLift implements Pronstants {
 
     
 
-    public ProntoLift(SpeedController m1, SpeedController m2, Joystick x) {
+    public ProntoLift(CANTalon m1, CANTalon m2, Joystick x) {
         motor1 = m1;
         motor2 = m2;
         jRight = x;
         state = LiftStates.Stopped;
+        
+//        motor1.setVoltageRampRate(RAMP_RATE);
+//        motor2.setVoltageRampRate(RAMP_RATE);
     }
 
     public void periodic() {

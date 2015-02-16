@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 
-	double x, y, z;
+	double x, y, z, speedLevel;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -39,12 +39,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
 		
-		/*
-		mFrontLeft.setVoltageRampRate(5.0);
-		mFrontRight.setVoltageRampRate(5.0);
-		mRearLeft.setVoltageRampRate(5.0);
-		mRearRight.setVoltageRampRate(5.0);
-		*/
+		mFrontLeft.setVoltageRampRate(RAMP_RATE);
+		mFrontRight.setVoltageRampRate(RAMP_RATE);
+		mRearLeft.setVoltageRampRate(RAMP_RATE);
+		mRearRight.setVoltageRampRate(RAMP_RATE);
 		
 		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
 		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
@@ -55,19 +53,22 @@ public class Robot extends IterativeRobot implements Pronstants {
 		lifter = new ProntoLift(mLift1, mLift2, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
-
+		
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
+		speedLevel = 0.0;
+		
+		CameraServer camera = CameraServer.getInstance();
+		camera.setQuality(10);
+		camera.startAutomaticCapture("cam0");
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		CameraServer camera = CameraServer.getInstance();
-		camera.setQuality(10);
-		camera.startAutomaticCapture("cam0");
+		
 	}
 
 	public void disabledInit() {
@@ -90,13 +91,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = jLeft.getX();
 		y = jLeft.getY();
 		z = jRight.getX();
+		speedLevel = jLeft.getZ();
 
-		mechDrive.drive(x, y, z);
-		
-		System.out.println("FL: " + mFrontLeft.getOutputVoltage());
-		System.out.println("FR: " + mFrontRight.getOutputVoltage());
-		System.out.println("BL: " + mRearLeft.getOutputVoltage());
-		System.out.println("BR: " + mRearRight.getOutputVoltage());
+		mechDrive.drive(x, y, z, speedLevel);
 		
 		lifter.periodic();
 		loader.periodic();

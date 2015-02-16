@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class PIDMechDrive implements Pronstants {
 	
 	public CANTalon frontLeft, frontRight, rearLeft, rearRight;
+	double speedCoeff;
 	
 	public PIDMechDrive(CANTalon fL, CANTalon fR, CANTalon rL, CANTalon rR) {
 		frontLeft = fL;
@@ -34,13 +35,16 @@ public class PIDMechDrive implements Pronstants {
 		frontRight.setPID(KP, KI, KD);
 		rearLeft.setPID(KP, KI, KD);
 		rearRight.setPID(KP, KI, KD);
+		
+		speedCoeff = 0.0;
 	}
 	
-	public void drive(double x, double y, double rotation) {
-		x = checkForDeadzone(x);
+	public void drive(double x, double y, double rotation, double spdLvl) {
+		x = checkForDeadzone(-x);
 		y = checkForDeadzone(y);
 		// y inverted b/c y-axis on Joystick is negative for forward values
-		rotation = checkForDeadzone(rotation);
+		rotation = checkForDeadzone(-rotation);
+		speedCoeff = spdLvl;
 		
 		x = convertToEncValue(x);
 		y = convertToEncValue(y);
@@ -48,7 +52,7 @@ public class PIDMechDrive implements Pronstants {
 		
 		frontLeft.set(x + y + rotation);		
 		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);		
+		rearLeft.set(-x + y + rotation);
 		rearRight.set(x + y - rotation);	
 	}
 
@@ -62,7 +66,7 @@ public class PIDMechDrive implements Pronstants {
 	}
 
 	private double convertToEncValue(double x) {
-		return x * ENCODER_MAX_SPEED;
+		return x * ENCODER_MAX_SPEED * speedCoeff;
 	}
 
 }
