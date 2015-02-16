@@ -78,7 +78,7 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (!tote.get()) {
-					lift(.5);
+					lift(.25);
 				} else {
 					lift(0);
 				}

@@ -39,6 +39,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift2 = new CANTalon(M_LIFT2_ID);
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
+		
+		mFrontLeft.setVoltageRampRate(RAMP_RATE);
+		mFrontRight.setVoltageRampRate(RAMP_RATE);
+		mRearRight.setVoltageRampRate(RAMP_RATE);
+		mRearLeft.setVoltageRampRate(RAMP_RATE);
 
 		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
 		jRight = new Joystick(RIGHT_JOYSTICK_PORT);

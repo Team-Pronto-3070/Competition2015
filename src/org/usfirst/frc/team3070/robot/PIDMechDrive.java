@@ -44,6 +44,10 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		
+//		x = rampControl(x);
+//		y = rampControl(y);
+//		rotation = rampControl(rotation);
+		
 		frontLeft.set(x + y + rotation);		
 		frontRight.set(-x + y - rotation);		
 		rearLeft.set(-x + y + rotation);		
@@ -61,6 +65,10 @@ public class PIDMechDrive implements Pronstants {
 
 	private double convertToEncValue(double x) {
 		return x * ENCODER_MAX_SPEED;
+	}
+	
+	private double rampControl(double a) {
+		return Math.pow(a, 3);
 	}
 
 }
