@@ -90,6 +90,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		default:
 			break;
 		}
+		
+		System.out.println("State: " + autoState);
 	}
 
 	public void disabledInit() {
