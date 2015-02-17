@@ -18,7 +18,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
 	Joystick jLeft, jRight;
-	PIDMechDrive mechDrive;
+	PIDMechDrive mechDrive, autoDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
@@ -54,6 +54,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
+		
+		autoDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
@@ -63,14 +65,20 @@ public class Robot extends IterativeRobot implements Pronstants {
 		y = 0.0;
 		z = 0.0;
 	}
+	
+	public void autonomousInit() {
+		autoDrive.setControlModePosition();
+	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		CameraServer camera = CameraServer.getInstance();
-		camera.setQuality(10);
-		camera.startAutomaticCapture("cam0");
+		autoDrive.positionDrive(0, 50, 0);
+		System.out.println(autoDrive.frontLeft.getPosition());
+		System.out.println(autoDrive.frontRight.getPosition());
+		System.out.println(autoDrive.rearLeft.getPosition());
+		System.out.println(autoDrive.rearRight.getPosition());
 	}
 
 	public void disabledInit() {
