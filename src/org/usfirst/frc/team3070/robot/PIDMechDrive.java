@@ -23,9 +23,9 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rearRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
-		frontRight.reverseSensor(false);
+		frontRight.reverseSensor(true);
 		rearRight.reverseSensor(true);
-		frontLeft.reverseSensor(true);
+		frontLeft.reverseSensor(false);
 		rearLeft.reverseSensor(false);
 		
 		frontLeft.reverseOutput(true);
@@ -44,7 +44,7 @@ public class PIDMechDrive implements Pronstants {
 		y = checkForDeadzone(y);
 		rotation = checkForDeadzone(-rotation);
 		speedCoeff = convertToSpeedLevel(spdLvl);
-		
+				
 		x = convertToEncValue(x);
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
