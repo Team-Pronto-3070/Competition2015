@@ -27,6 +27,7 @@ public class ProntoLift implements Pronstants{
 		jRight = r;
 		notAtTop = true;
 		notAtBottom = true;
+		readyForNextTote = false;
 		toteCount = 0;
 		
 		state = LiftStates.Stopped;
@@ -37,10 +38,12 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (notAtTop && jRight.getRawButton(3)) {
+					readyForNextTote = false;
 					return StartLiftUp;
 				}
 
 				if (notAtBottom && jRight.getRawButton(2)) {
+					readyForNextTote = false;
 					return StartLiftDown;
 				}
 
@@ -80,6 +83,7 @@ public class ProntoLift implements Pronstants{
 				if (!tote.get()) {
 					setLift(.4);
 				} else {
+					readyForNextTote = true;
 					setLift(0);
 				}
 				if (!jRight.getRawButton(3)) {

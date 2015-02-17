@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class PIDMechDrive implements Pronstants {
 	
 	public CANTalon frontLeft, frontRight, rearLeft, rearRight;
-	double speedCoeff;
+	static double speedCoeff;
 	
 	public PIDMechDrive(CANTalon fL, CANTalon fR, CANTalon rL, CANTalon rR) {
 		frontLeft = fL;
@@ -18,18 +18,18 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
 		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
 		
-		frontRight.reverseSensor(false);
-		rearRight.reverseSensor(false);
-		frontLeft.reverseSensor(true);
-		rearLeft.reverseSensor(true);
-		
-		frontLeft.reverseOutput(true);
-		rearLeft.reverseOutput(true);
-		
 		frontLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		frontRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rearLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rearRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		
+		frontRight.reverseSensor(false);
+		rearRight.reverseSensor(true);
+		frontLeft.reverseSensor(true);
+		rearLeft.reverseSensor(false);
+		
+		frontLeft.reverseOutput(true);
+		rearLeft.reverseOutput(true);
 
 		frontLeft.setPID(KP, KI, KD);
 		frontRight.setPID(KP, KI, KD);
@@ -40,9 +40,8 @@ public class PIDMechDrive implements Pronstants {
 	}
 	
 	public void drive(double x, double y, double rotation, double spdLvl) {
-		x = checkForDeadzone(-x);
+		x = checkForDeadzone(x);
 		y = checkForDeadzone(y);
-		// y inverted b/c y-axis on Joystick is negative for forward values
 		rotation = checkForDeadzone(-rotation);
 		speedCoeff = convertToSpeedLevel(spdLvl);
 		
@@ -50,10 +49,20 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		
-		frontLeft.set(x + y + rotation);		
-		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);
-		rearRight.set(x + y - rotation);	
+		frontLeft.set(y);
+		frontRight.set(y);
+		rearLeft.set(y);
+		rearRight.set(y);
+		
+//		frontLeft.set(x + y + rotation);		
+//		frontRight.set(-x + y - rotation);		
+//		rearLeft.set(-x + y + rotation);
+//		rearRight.set(x + y - rotation);
+		
+		System.out.println("FL: " + frontLeft.getEncVelocity());
+		System.out.println("FR: " + frontRight.getEncVelocity());
+		System.out.println("RL: " + rearLeft.getEncVelocity());
+		System.out.println("RR: " + rearRight.getEncVelocity());
 	}
 	
 	public void setPos(double x, double y, double rotation) {

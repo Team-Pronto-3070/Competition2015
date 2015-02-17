@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3070.robot;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
 
 public class ProntoFlexer implements Pronstants {
 
@@ -9,13 +9,13 @@ public class ProntoFlexer implements Pronstants {
 		public Flexstate check();
 	}
 
-	static SpeedController flexer;
+	static CANTalon flexer;
 	static Joystick jLeft;
 	static int timeCounter;
 	static boolean flexedIn;
 	Flexstate state;
 	
-	public ProntoFlexer(SpeedController f, Joystick x) {
+	public ProntoFlexer(CANTalon f, Joystick x) {
 		flexer = f;
 		jLeft = x;
 		state = Flexstates.FlexerStoppedExpanded;
@@ -28,6 +28,8 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppedExpanded {
 			@Override
 			public Flexstate check() {
+				flexedIn = false;
+				
 				if (jLeft.getRawButton(3))
 					return StartFlexIn;
 
@@ -43,6 +45,8 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppedContracted {
 			@Override
 			public Flexstate check() {
+				flexedIn = true;
+				
 				if (jLeft.getRawButton(3))
 					return StartFlexOut;
 				

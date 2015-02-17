@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +27,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
+	
+	CameraServer camera;
 
 	double x, y, z, speedLevel;
 
@@ -67,7 +70,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = 0.0;
 		speedLevel = 0.0;
 		
-		CameraServer camera = CameraServer.getInstance();
+		camera = CameraServer.getInstance();
 		camera.setQuality(10);
 		camera.startAutomaticCapture("cam0");
 	}
@@ -124,6 +127,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 	
 	private void printToSmartDashboard() {
+		SmartDashboard.putBoolean(" At Top ", !ProntoLift.notAtTop);
+		SmartDashboard.putBoolean(" At Bottom ", !ProntoLift.notAtBottom);
+		SmartDashboard.putBoolean(" Ready For Tote ", ProntoLift.readyForNextTote);
+		SmartDashboard.putBoolean(" Flexer Contracted ", ProntoFlexer.flexedIn);
 		
+		SmartDashboard.putNumber(" Power Percent ", PIDMechDrive.speedCoeff * 100);
 	}
 }
