@@ -2,9 +2,9 @@ package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot implements Pronstants {
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
+	DigitalInput upperLimit, lowerLimit, toteLimit;
 	Joystick jLeft, jRight;
 	PIDMechDrive mechDrive;
 	ProntoLift lifter;
@@ -38,6 +39,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
 		
+		upperLimit = new DigitalInput(UPPER_LIMIT_ID);
+		lowerLimit = new DigitalInput(LOWER_LIMIT_ID);
+		toteLimit = new DigitalInput(TOTE_LIMIT_ID);
+		
 		mFrontLeft.setVoltageRampRate(RAMP_RATE);
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
@@ -49,7 +54,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
 
-		lifter = new ProntoLift(mLift1, mLift2, jRight);
+		lifter = new ProntoLift(mLift1, mLift2, upperLimit, lowerLimit, toteLimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 		
