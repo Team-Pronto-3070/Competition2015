@@ -44,13 +44,9 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		
-//		x = rampControl(x);
-//		y = rampControl(y);
-//		rotation = rampControl(rotation);
-		
-		frontLeft.set(x + y + rotation);		
-		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);		
+		frontLeft.set(x + y + rotation);
+		frontRight.set(-x + y - rotation);
+		rearLeft.set(-x + y + rotation);
 		rearRight.set(x + y - rotation);	
 	}
 

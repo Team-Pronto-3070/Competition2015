@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	DigitalInput upperlimit, lowerlimit, totelimit;
-
+	
 	double x, y, z;
 
 	/**
