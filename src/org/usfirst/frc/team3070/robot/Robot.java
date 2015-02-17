@@ -160,10 +160,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 				mLift1.set(-.5);
 				mLift2.set(.5);
 			}
-		}
-		for (int i = 0; i < x; i++) {
-			mLift1.set(.5);
-			mLift2.set(-.5);
+		} else {
+			for (int i = 0; i < x; i++) {
+				mLift1.set(.5);
+				mLift2.set(-.5);
+			}
 		}
 		mLift1.set(0);
 		mLift2.set(0);
