@@ -128,7 +128,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	public void driveStraight(double x) {
-		for (int i = 0; i < Math.abs(x); i++) {
+		x = Math.abs(x);
+		for (int i = 0; i < x; i++) {
 			mFrontLeft.set(.5);
 			mFrontRight.set(-.5);
 			mRearLeft.set(.5);
