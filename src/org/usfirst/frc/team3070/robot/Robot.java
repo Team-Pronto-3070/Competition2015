@@ -14,10 +14,14 @@ import edu.wpi.first.wpilibj.Joystick;
  * directory.
  */
 public class Robot extends IterativeRobot implements Pronstants {
-	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
-			mLoader, mFlexer;
+	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight;
+	CANTalon mLift1, mLift2;
+	CANTalon mLoader, mFlexer;
+	
 	DigitalInput upperLimit, lowerLimit, toteLimit;
+	
 	Joystick jLeft, jRight;
+	
 	PIDMechDrive mechDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
@@ -67,6 +71,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 		camera.setQuality(10);
 		camera.startAutomaticCapture("cam0");
 	}
+	
+	public void autonomousInit() {
+		mechDrive.setControlModePosition();
+		mechDrive.resetPosition();
+	}
 
 	/**
 	 * This function is called periodically during autonomous
@@ -74,7 +83,26 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		
 	}
+	
+	public void teleopInit() {
+		mechDrive.setControlModeSpeed();
+	}
 
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		getJoystickInput();
+
+		mechDrive.drive(x, y, z, speedLevel);
+		
+		lifter.periodic();
+		loader.periodic();
+		flexer.periodic();
+				
+		printToSmartDashboard();
+	}
+	
 	public void disabledInit() {
 		lifter.stopPeriodic();
 		loader.stopPeriodic();
@@ -82,32 +110,20 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	/**
-	 * This function is called periodically during operator control
-	 */
-	public void teleopPeriodic() {
-		// SmartDashboard.putNumber("Forward Left Voltage: ", mFrontLeft.getOutputVoltage());
-		// SmartDashboard.putNumber("Forward Right Voltage: ", mFrontRight.getOutputVoltage());
-		// SmartDashboard.putNumber("Rear Left Voltage: ", mRearLeft.getOutputVoltage());
-		// SmartDashboard.putNumber("Rear Right Voltage: ", mRearRight.getOutputVoltage());
-		// SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
-		// I don't know why this doesn't work D:
-		
-		x = jLeft.getX();
-		y = jLeft.getY();
-		z = jRight.getX();
-		speedLevel = jLeft.getZ();
-
-		mechDrive.drive(x, y, z, speedLevel);
-		
-		lifter.periodic();
-		loader.periodic();
-		flexer.periodic();
-	}
-
-	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
 
+	}
+	
+	private void getJoystickInput() {
+		x = jLeft.getX();
+		y = jLeft.getY();
+		z = jRight.getX();
+		speedLevel = jLeft.getZ();
+	}
+	
+	private void printToSmartDashboard() {
+		
 	}
 }

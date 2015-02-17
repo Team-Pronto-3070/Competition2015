@@ -12,6 +12,7 @@ public class ProntoFlexer implements Pronstants {
 	static SpeedController flexer;
 	static Joystick jLeft;
 	static int timeCounter;
+	static boolean flexedIn;
 	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
@@ -19,6 +20,8 @@ public class ProntoFlexer implements Pronstants {
 		jLeft = x;
 		state = Flexstates.FlexerStoppedExpanded;
 		timeCounter = 0;
+		
+		flexedIn = false;
 	}
 
 	enum Flexstates implements Flexstate {
@@ -28,6 +31,11 @@ public class ProntoFlexer implements Pronstants {
 				if (jLeft.getRawButton(3))
 					return StartFlexIn;
 
+				if (jLeft.getRawButton(11) && jLeft.getRawButton(6)) {
+					if (jLeft.getRawButton(2))
+						return StartFlexOut;
+				}
+				
 				// else
 				return FlexerStoppedExpanded;
 			}
@@ -37,6 +45,11 @@ public class ProntoFlexer implements Pronstants {
 			public Flexstate check() {
 				if (jLeft.getRawButton(3))
 					return StartFlexOut;
+				
+				if (jLeft.getRawButton(11) && jLeft.getRawButton(6)) {
+					if (jLeft.getRawButton(2))
+						return StartFlexIn;
+				}
 				
 				// else
 				return FlexerStoppedContracted;
@@ -62,7 +75,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingIn {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= NUM_SECONDS)
+				if (timeCounter >= NUM_TICKS)
 					return FlexerStoppingIn;
 
 				// else
@@ -74,7 +87,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingOut {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= NUM_SECONDS)
+				if (timeCounter >= NUM_TICKS)
 					return FlexerStoppingOut;
 
 				// else
@@ -87,6 +100,7 @@ public class ProntoFlexer implements Pronstants {
 			@Override
 			public Flexstate check() {
 				flexStop();
+				flexedIn = true;
 				timeCounter = 0;
 				return FlexerStoppedContracted;
 			}
@@ -96,6 +110,7 @@ public class ProntoFlexer implements Pronstants {
 			@Override
 			public Flexstate check() {
 				flexStop();
+				flexedIn = false;
 				timeCounter = 0;
 				return FlexerStoppedExpanded;
 			}

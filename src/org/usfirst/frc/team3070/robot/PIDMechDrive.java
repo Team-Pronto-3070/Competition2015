@@ -55,6 +55,41 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.set(-x + y + rotation);
 		rearRight.set(x + y - rotation);	
 	}
+	
+	public void setPos(double x, double y, double rotation) {
+		frontLeft.set(x + y + rotation);		
+		frontRight.set(-x + y - rotation);		
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
+	}
+	
+	public void resetPosition() {
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		rearLeft.setPosition(0);
+		rearRight.setPosition(0);
+	}
+	
+	public void setControlModeSpeed() {
+		frontLeft.changeControlMode(CANTalon.ControlMode.Speed);
+		frontRight.changeControlMode(CANTalon.ControlMode.Speed);
+		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
+		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
+	}
+	
+	public void setControlModePosition() {
+		frontLeft.changeControlMode(CANTalon.ControlMode.Position);
+		frontRight.changeControlMode(CANTalon.ControlMode.Position);
+		rearLeft.changeControlMode(CANTalon.ControlMode.Position);
+		rearRight.changeControlMode(CANTalon.ControlMode.Position);
+	}
+	
+	public void setAllPID(double kP, double kI, double kD) {
+		frontLeft.setPID(kP, kI, kD);
+		frontRight.setPID(kP, kI, kD);
+		rearLeft.setPID(kP, kI, kD);
+		rearRight.setPID(kP, kI, kD);
+	}
 
 	private double checkForDeadzone(double a) {
 		if (Math.abs(a) < DEADZONE) {
