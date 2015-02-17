@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		default:
 			break;
 		}
-		
+
 		System.out.println("State: " + autoState);
 	}
 
@@ -130,12 +130,21 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	public void driveStraight(double x) {
-		x = Math.abs(x);
-		for (int i = 0; i < x; i++) {
-			mFrontLeft.set(.5);
-			mFrontRight.set(-.5);
-			mRearLeft.set(.5);
-			mRearRight.set(-.5);
+		if (x < 0) {
+			x = Math.abs(x);
+			for (int i = 0; i < x; i++) {
+				mFrontLeft.set(-.5);
+				mFrontRight.set(.5);
+				mRearLeft.set(-.5);
+				mRearRight.set(.5);
+			}
+		} else {
+			for (int i = 0; i < x; i++) {
+				mFrontLeft.set(.5);
+				mFrontRight.set(-.5);
+				mRearLeft.set(.5);
+				mRearRight.set(-.5);
+			}
 		}
 		mFrontLeft.set(0);
 		mFrontRight.set(0);
@@ -145,7 +154,14 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	public void Lift(double x) {
-		for (int i = 0; i < Math.abs(x); i++) {
+		if (x < 0) {
+			x = Math.abs(x);
+			for (int i = 0; i < x; i++) {
+				mLift1.set(-.5);
+				mLift2.set(.5);
+			}
+		}
+		for (int i = 0; i < x; i++) {
 			mLift1.set(.5);
 			mLift2.set(-.5);
 		}
