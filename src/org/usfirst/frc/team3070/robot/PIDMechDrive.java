@@ -54,6 +54,13 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.set(x + y - rotation);
 	}
 
+	public void resetPosition() {
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		rearLeft.setPosition(0);
+		rearRight.setPosition(0);
+	}
+	
 	private double checkForDeadzone(double a) {
 		if (Math.abs(a) < DEADZONE) {
 			a = 0.0;

@@ -27,6 +27,9 @@ public class ProntoFlexer implements Pronstants {
 			public Flexstate check() {
 				if (jLeft.getRawButton(3))
 					return StartFlexIn;
+				
+				if (jLeft.getRawButton(11))
+					return StartFlexOut;
 
 				// else
 				return FlexerStoppedExpanded;
@@ -37,6 +40,9 @@ public class ProntoFlexer implements Pronstants {
 			public Flexstate check() {
 				if (jLeft.getRawButton(3))
 					return StartFlexOut;
+				
+				if (jLeft.getRawButton(11))
+					return StartFlexIn;
 				
 				// else
 				return FlexerStoppedContracted;
@@ -62,7 +68,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingIn {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= ONE_SECOND)
+				if (timeCounter >= FLEX_LIMIT)
 					return FlexerStoppingIn;
 
 				// else
@@ -74,7 +80,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingOut {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= ONE_SECOND)
+				if (timeCounter >= FLEX_LIMIT)
 					return FlexerStoppingOut;
 
 				// else

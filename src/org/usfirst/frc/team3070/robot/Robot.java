@@ -68,13 +68,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 	
 	public void autonomousInit() {
 		autoDrive.setControlModePosition();
+		autoDrive.resetPosition();
+
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		autoDrive.positionDrive(0, 50, 0);
+		autoDrive.positionDrive(-3000, 0, 0);
 		System.out.println(autoDrive.frontLeft.getPosition());
 		System.out.println(autoDrive.frontRight.getPosition());
 		System.out.println(autoDrive.rearLeft.getPosition());
@@ -85,6 +87,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 		lifter.stopPeriodic();
 		loader.stopPeriodic();
 		flexer.stopPeriodic();
+	}
+	
+	public void teleopInit() {
+		autoDrive.setControlModeSpeed();
 	}
 
 	/**
