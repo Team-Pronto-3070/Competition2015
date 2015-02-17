@@ -58,14 +58,14 @@ public class ProntoLift implements Pronstants{
 		LiftingUp {
 			@Override
 			public LiftState check() {
-				if (!upper.get()) {
-					notAtTop = false;
-					return Stopping;
-				}
-				
-				if (!tote.get()) {
-					return WaitForRelease;
-				}
+//				if (!upper.get()) {
+//					notAtTop = false;
+//					return Stopping;
+//				}
+//				
+//				if (!tote.get()) {
+//					return WaitForRelease;
+//				}
 				
 				if (!jRight.getRawButton(3)) {
 					return Stopping;
@@ -100,10 +100,10 @@ public class ProntoLift implements Pronstants{
 		LiftingDown {
 			@Override
 			public LiftState check() {
-				if (!lower.get()) {
-					notAtBottom = false;
-					return Stopping;
-				}
+//				if (!lower.get()) {
+//					notAtBottom = false;
+//					return Stopping;
+//				}
 				
 				if (!jRight.getRawButton(2))
 					return Stopping;
@@ -129,7 +129,7 @@ public class ProntoLift implements Pronstants{
 	}
 	
 	private static void lift(double speed) {
-		motor1.set(speed);
+		motor1.set(-speed);
 		motor2.set(-speed);
 	}
 
