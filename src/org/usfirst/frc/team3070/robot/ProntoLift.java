@@ -11,7 +11,7 @@ public class ProntoLift implements Pronstants{
 	}
 	
 	static CANTalon motor1, motor2;
-	static Joystick xbox;
+	static Joystick jRight;
 	static DigitalInput lower, upper, tote;
 	static boolean notAtTop, notAtBottom, readyForNextTote;
 	static int toteCount;
@@ -24,7 +24,7 @@ public class ProntoLift implements Pronstants{
 		lower = l;
 		upper = u;
 		tote = t;
-		xbox = r;
+		jRight = r;
 		notAtTop = true;
 		notAtBottom = true;
 		toteCount = 0;
@@ -36,11 +36,11 @@ public class ProntoLift implements Pronstants{
 		Stopped {
 			@Override
 			public LiftState check() {
-				if (notAtTop && xbox.getRawButton(1)) {
+				if (notAtTop && jRight.getRawButton(3)) {
 					return StartLiftUp;
 				}
 
-				if (notAtBottom && xbox.getRawButton(2)) {
+				if (notAtBottom && jRight.getRawButton(2)) {
 					return StartLiftDown;
 				}
 
@@ -67,7 +67,7 @@ public class ProntoLift implements Pronstants{
 					return WaitForRelease;
 				}
 				
-				if (!xbox.getRawButton(1)) {
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -82,7 +82,7 @@ public class ProntoLift implements Pronstants{
 				} else {
 					lift(0);
 				}
-				if (!xbox.getRawButton(1)) {
+				if (!jRight.getRawButton(3)) {
 					return Stopping;
 				}
 				
@@ -105,7 +105,7 @@ public class ProntoLift implements Pronstants{
 					return Stopping;
 				}
 				
-				if (!xbox.getRawButton(2))
+				if (!jRight.getRawButton(2))
 					return Stopping;
 				
 				return LiftingDown;

@@ -17,7 +17,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
-	Joystick xbox;
+	Joystick jLeft, jRight;
 	PIDMechDrive mechDrive, autoDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
@@ -45,7 +45,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mRearRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
 
-		xbox = new Joystick(1);
+		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
+		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
 		
 		upperlimit = new DigitalInput(1);
 		lowerlimit = new DigitalInput(2);
@@ -56,9 +57,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		autoDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
-		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, xbox);
-		loader = new ProntoLoader(mLoader, xbox);
-		flexer = new ProntoFlexer(mFlexer, xbox);
+		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
+		loader = new ProntoLoader(mLoader, jLeft, jRight);
+		flexer = new ProntoFlexer(mFlexer, jLeft);
 
 		x = 0.0;
 		y = 0.0;
@@ -103,9 +104,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		// SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
 		// I don't know why this doesn't work D:
 		
-		x = xbox.getRawAxis(0);
-		y = xbox.getRawAxis(1);
-		z = xbox.getRawAxis(4);
+		x = jLeft.getX();
+		y = jLeft.getY();
+		z = jRight.getX();
 
 		mechDrive.drive(x, y, z);
 

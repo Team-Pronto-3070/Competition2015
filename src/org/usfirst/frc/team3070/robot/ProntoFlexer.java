@@ -10,13 +10,13 @@ public class ProntoFlexer implements Pronstants {
 	}
 
 	static SpeedController flexer;
-	static Joystick xbox;
+	static Joystick jLeft;
 	static int timeCounter;
 	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
 		flexer = f;
-		xbox = x;
+		jLeft = x;
 		state = Flexstates.FlexerStoppedExpanded;
 		timeCounter = 0;
 	}
@@ -25,10 +25,10 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppedExpanded {
 			@Override
 			public Flexstate check() {
-				if (xbox.getRawButton(5))
+				if (jLeft.getRawButton(3))
 					return StartFlexIn;
 				
-				if (xbox.getRawButton(6))
+				if (jLeft.getRawButton(11))
 					return StartFlexOut;
 
 				// else
@@ -38,10 +38,10 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppedContracted {
 			@Override
 			public Flexstate check() {
-				if (xbox.getRawButton(5))
+				if (jLeft.getRawButton(3))
 					return StartFlexOut;
 				
-				if (xbox.getRawButton(6))
+				if (jLeft.getRawButton(11))
 					return StartFlexIn;
 				
 				// else
