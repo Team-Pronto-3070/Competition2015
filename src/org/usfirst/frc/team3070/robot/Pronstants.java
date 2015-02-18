@@ -33,6 +33,7 @@ public interface Pronstants {
 	// Ports used in: Robot.java
 	public static final int J_LEFT_PORT = 1;
 	public static final int J_RIGHT_PORT = 2;
+	public static final int XBOX_PORT = 1;
 
 	// used in: Robot.java, PIDMechDrive.java
 	public static final int LEFT_JOYSTICK_PORT = 1;
