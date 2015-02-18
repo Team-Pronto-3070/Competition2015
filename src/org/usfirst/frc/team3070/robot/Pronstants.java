@@ -52,6 +52,6 @@ public interface Pronstants {
 	public static final double LOAD_SPEED = 1.0;
 	public static final double FLEX_SPEED = 1.0;
 	public static final int ENCODER_MAX_SPEED = 1600;
-	public static final int NUM_TICKS = 60;
+	public static final int NUM_TICKS = 100;
 	public static final double RAMP_RATE = 25.0;
 }

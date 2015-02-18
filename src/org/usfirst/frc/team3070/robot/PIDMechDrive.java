@@ -24,12 +24,14 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		
 		frontRight.reverseSensor(true);
-		rearRight.reverseSensor(true);
+		rearRight.reverseSensor(false);
 		frontLeft.reverseSensor(false);
-		rearLeft.reverseSensor(false);
+		rearLeft.reverseSensor(true);
 		
-		frontLeft.reverseOutput(true);
+		frontLeft.reverseOutput(false);
 		rearLeft.reverseOutput(true);
+		frontRight.reverseOutput(false);
+		rearRight.reverseOutput(true);
 
 		frontLeft.setPID(KP, KI, KD);
 		frontRight.setPID(KP, KI, KD);
@@ -39,30 +41,20 @@ public class PIDMechDrive implements Pronstants {
 		speedCoeff = 0.0;
 	}
 	
-	public void drive(double x, double y, double rotation, double spdLvl) {
+	public void drive(double rotation, double y, double x, double spdLvl) {
 		x = checkForDeadzone(x);
 		y = checkForDeadzone(y);
-		rotation = checkForDeadzone(-rotation);
-		speedCoeff = convertToSpeedLevel(spdLvl);
+		rotation = checkForDeadzone(rotation);
+		//speedCoeff = convertToSpeedLevel(spdLvl);
 				
 		x = convertToEncValue(x);
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
-		
-		frontLeft.set(y);
-		frontRight.set(y);
-		rearLeft.set(y);
-		rearRight.set(y);
-		
-//		frontLeft.set(x + y + rotation);		
-//		frontRight.set(-x + y - rotation);		
-//		rearLeft.set(-x + y + rotation);
-//		rearRight.set(x + y - rotation);
-		
-		System.out.println("FL: " + frontLeft.getEncVelocity());
-		System.out.println("FR: " + frontRight.getEncVelocity());
-		System.out.println("RL: " + rearLeft.getEncVelocity());
-		System.out.println("RR: " + rearRight.getEncVelocity());
+				
+		frontLeft.set(x + y + rotation);		
+		frontRight.set(-x + y - rotation);		
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
 	}
 	
 	public void setPos(double x, double y, double rotation) {
@@ -108,9 +100,8 @@ public class PIDMechDrive implements Pronstants {
 		return a;
 		
 	}
-
 	private double convertToEncValue(double x) {
-		return x * ENCODER_MAX_SPEED * speedCoeff;
+		return x * ENCODER_MAX_SPEED ;
 	}
 	
 	private double convertToSpeedLevel(double x) {
