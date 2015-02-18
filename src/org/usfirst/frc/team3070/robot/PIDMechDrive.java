@@ -12,10 +12,7 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft = rL;
 		rearRight = rR;
 		
-		frontLeft.changeControlMode(CANTalon.ControlMode.Speed);
-		frontRight.changeControlMode(CANTalon.ControlMode.Speed);
-		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
-		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
+		setControlModeSpeed();
 		
 		frontRight.reverseSensor(true);
 		rearRight.reverseSensor(true);
@@ -44,12 +41,26 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		
-		frontLeft.set(x + y + rotation);		
-		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);		
-		rearRight.set(x + y - rotation);	
+		frontLeft.set(x + y + rotation);
+		frontRight.set(-x + y - rotation);
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
+	}
+	
+	public void positionDrive(double x, double y, double rotation) {
+		frontLeft.set(x + y + rotation);
+		frontRight.set(-x + y - rotation);
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
 	}
 
+	public void resetPosition() {
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		rearLeft.setPosition(0);
+		rearRight.setPosition(0);
+	}
+	
 	private double checkForDeadzone(double a) {
 		if (Math.abs(a) < DEADZONE) {
 			a = 0.0;
@@ -62,5 +73,18 @@ public class PIDMechDrive implements Pronstants {
 	private double convertToEncValue(double x) {
 		return x * ENCODER_MAX_SPEED;
 	}
-
+	
+	public void setControlModeSpeed() {
+		frontLeft.changeControlMode(CANTalon.ControlMode.Speed);
+		frontRight.changeControlMode(CANTalon.ControlMode.Speed);
+		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
+		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
+	}
+	
+	public void setControlModePosition() {
+		frontLeft.changeControlMode(CANTalon.ControlMode.Position);
+		frontRight.changeControlMode(CANTalon.ControlMode.Position);
+		rearLeft.changeControlMode(CANTalon.ControlMode.Position);
+		rearRight.changeControlMode(CANTalon.ControlMode.Position);
+	}
 }

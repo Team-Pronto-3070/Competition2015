@@ -3,7 +3,7 @@ package org.usfirst.frc.team3070.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -17,12 +17,13 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight, mLift1, mLift2,
 			mLoader, mFlexer;
-	Joystick jLeft, jRight;
-	PIDMechDrive mechDrive;
+	Joystick xbox;
+	PIDMechDrive mechDrive, autoDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
-
+	DigitalInput upperlimit, lowerlimit, totelimit;
+	
 	double x, y, z;
 
 	/**
@@ -38,35 +39,57 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift2 = new CANTalon(M_LIFT2_ID);
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
+		
+		mFrontLeft.setVoltageRampRate(RAMP_RATE);
+		mFrontRight.setVoltageRampRate(RAMP_RATE);
+		mRearRight.setVoltageRampRate(RAMP_RATE);
+		mRearLeft.setVoltageRampRate(RAMP_RATE);
 
-		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
-		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
+		xbox = new Joystick(1);
+		
+		upperlimit = new DigitalInput(1);
+		lowerlimit = new DigitalInput(2);
+		totelimit = new DigitalInput(3);
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
+		
+		autoDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft, mRearRight);
 
-		lifter = new ProntoLift(mLift1, mLift2, jRight);
-		loader = new ProntoLoader(mLoader, jLeft, jRight);
-		flexer = new ProntoFlexer(mFlexer, jLeft);
+		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, xbox);
+		loader = new ProntoLoader(mLoader, xbox);
+		flexer = new ProntoFlexer(mFlexer, xbox);
 
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
+	}
+	
+	public void autonomousInit() {
+		autoDrive.setControlModePosition();
+		autoDrive.resetPosition();
+
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		CameraServer camera = CameraServer.getInstance();
-		camera.setQuality(10);
-		camera.startAutomaticCapture("cam0");
+		autoDrive.positionDrive(-3000, 0, 0);
+		System.out.println(autoDrive.frontLeft.getPosition());
+		System.out.println(autoDrive.frontRight.getPosition());
+		System.out.println(autoDrive.rearLeft.getPosition());
+		System.out.println(autoDrive.rearRight.getPosition());
 	}
 
 	public void disabledInit() {
 		lifter.stopPeriodic();
 		loader.stopPeriodic();
 		flexer.stopPeriodic();
+	}
+	
+	public void teleopInit() {
+		autoDrive.setControlModeSpeed();
 	}
 
 	/**
@@ -80,9 +103,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		// SmartDashboard.putData("Mechanum Drive PID:", mechDrive);
 		// I don't know why this doesn't work D:
 		
-		x = jLeft.getX();
-		y = jLeft.getY();
-		z = jRight.getX();
+		x = xbox.getRawAxis(0);
+		y = xbox.getRawAxis(1);
+		z = xbox.getRawAxis(4);
 
 		mechDrive.drive(x, y, z);
 

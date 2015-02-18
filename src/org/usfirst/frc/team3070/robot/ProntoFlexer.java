@@ -10,29 +10,47 @@ public class ProntoFlexer implements Pronstants {
 	}
 
 	static SpeedController flexer;
-	static Joystick jLeft;
+	static Joystick xbox;
+	static int timeCounter;
 	Flexstate state;
 	
 	public ProntoFlexer(SpeedController f, Joystick x) {
 		flexer = f;
-		jLeft = x;
-		state = Flexstates.FlexerStopped;
+		xbox = x;
+		state = Flexstates.FlexerStoppedExpanded;
+		timeCounter = 0;
 	}
 
 	enum Flexstates implements Flexstate {
-		FlexerStopped {
+		FlexerStoppedExpanded {
+			@Override
 			public Flexstate check() {
-				if (jLeft.getRawButton(3))
+				if (xbox.getRawButton(5))
 					return StartFlexIn;
-				if (jLeft.getRawButton(2))
+				
+				if (xbox.getRawButton(6))
 					return StartFlexOut;
 
 				// else
-				return FlexerStopped;
+				return FlexerStoppedExpanded;
+			}
+		},
+		FlexerStoppedContracted {
+			@Override
+			public Flexstate check() {
+				if (xbox.getRawButton(5))
+					return StartFlexOut;
+				
+				if (xbox.getRawButton(6))
+					return StartFlexIn;
+				
+				// else
+				return FlexerStoppedContracted;
 			}
 		},
 
 		StartFlexIn {
+			@Override
 			public Flexstate check() {
 				flexIn();
 				return FlexingIn;
@@ -40,6 +58,7 @@ public class ProntoFlexer implements Pronstants {
 		},
 
 		StartFlexOut {
+			@Override
 			public Flexstate check() {
 				flexOut();
 				return FlexingOut;
@@ -47,29 +66,44 @@ public class ProntoFlexer implements Pronstants {
 		},
 
 		FlexingIn {
+			@Override
 			public Flexstate check() {
-				if (!jLeft.getRawButton(3))
-					return FlexerStopping;
+				if (timeCounter >= FLEX_LIMIT)
+					return FlexerStoppingIn;
 
 				// else
+				timeCounter++;
 				return FlexingIn;
 			}
 		},
 
 		FlexingOut {
+			@Override
 			public Flexstate check() {
-				if (!jLeft.getRawButton(2))
-					return FlexerStopping;
+				if (timeCounter >= FLEX_LIMIT)
+					return FlexerStoppingOut;
 
 				// else
+				timeCounter++;
 				return FlexingOut;
 			}
 		},
 
-		FlexerStopping {
+		FlexerStoppingIn {
+			@Override
 			public Flexstate check() {
 				flexStop();
-				return FlexerStopped;
+				timeCounter = 0;
+				return FlexerStoppedContracted;
+			}
+		},
+		
+		FlexerStoppingOut {
+			@Override
+			public Flexstate check() {
+				flexStop();
+				timeCounter = 0;
+				return FlexerStoppedExpanded;
 			}
 		}
 	}
