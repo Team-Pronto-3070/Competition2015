@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class PIDMechDrive implements Pronstants {
 	
 	public CANTalon frontLeft, frontRight, rearLeft, rearRight;
-	static double speedCoeff;
 	
 	public PIDMechDrive(CANTalon fL, CANTalon fR, CANTalon rL, CANTalon rR) {
 		frontLeft = fL;
@@ -37,8 +36,6 @@ public class PIDMechDrive implements Pronstants {
 		frontRight.setPID(KP, KI, KD);
 		rearLeft.setPID(KP, KI, KD);
 		rearRight.setPID(KP, KI, KD);
-		
-		speedCoeff = 0.0;
 	}
 	
 	public void drive(double rotation, double y, double x, double spdLvl) {
@@ -97,23 +94,12 @@ public class PIDMechDrive implements Pronstants {
 			a = 0.0;
 		}
 		
+		a = Math.pow(a, 3);
+		
 		return a;
 		
 	}
 	private double convertToEncValue(double x) {
-		return x * ENCODER_MAX_SPEED ;
+		return x * ENCODER_MAX_SPEED;
 	}
-	
-	private double convertToSpeedLevel(double x) {
-		if (x < 0) {
-			x = (x * -0.5) + 0.5;
-		} else if (x > 0) {
-			x = 0.5 - (x * 0.5);
-		} else {
-			x = 0.5;
-		}
-		
-		return x;
-	}
-
 }

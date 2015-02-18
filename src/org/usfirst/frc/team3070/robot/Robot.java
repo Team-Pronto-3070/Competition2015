@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		mechDrive.setPos(0, 1000, 0);
 	}
 
 	public void teleopInit() {
@@ -95,10 +95,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		x = jLeft.getX();
-		y = jLeft.getY();
-		z = jRight.getX();
-
 		getJoystickInput();
 
 		mechDrive.drive(x, y, z, speedLevel);
@@ -124,6 +120,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	private void getJoystickInput() {
+		x = jLeft.getX();
+		y = jLeft.getY();
+		z = jRight.getX();
 		speedLevel = jLeft.getZ();
 	}
 
@@ -133,9 +132,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 		SmartDashboard.putBoolean(" Ready For Tote ",
 				ProntoLift.readyForNextTote);
 		SmartDashboard.putBoolean(" Flexer Contracted ", ProntoFlexer.flexedIn);
-
-		SmartDashboard.putNumber(" Power Percent ",
-				PIDMechDrive.speedCoeff * 100);
 	}
 
 	private void cameraSetup() {
