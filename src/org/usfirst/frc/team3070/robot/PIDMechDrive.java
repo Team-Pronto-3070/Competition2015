@@ -12,10 +12,7 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft = rL;
 		rearRight = rR;
 		
-		frontLeft.changeControlMode(CANTalon.ControlMode.Speed);
-		frontRight.changeControlMode(CANTalon.ControlMode.Speed);
-		rearLeft.changeControlMode(CANTalon.ControlMode.Speed);
-		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
+		setControlModeSpeed();
 		
 		frontLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		frontRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
@@ -38,7 +35,7 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.setPID(KP, KI, KD);
 	}
 	
-	public void drive(double rotation, double y, double x, double spdLvl) {
+	public void drive(double rotation, double y, double x) {
 		x = checkForDeadzone(x);
 		y = checkForDeadzone(y);
 		rotation = checkForDeadzone(rotation);

@@ -14,7 +14,6 @@ public class ProntoLift implements Pronstants{
 	static Joystick jRight;
 	static DigitalInput lower, upper, tote;
 	static boolean notAtTop, notAtBottom, readyForNextTote;
-	static int toteCount;
 	LiftState state;
 
 	public ProntoLift(CANTalon m1, CANTalon m2, DigitalInput u, DigitalInput l,
@@ -28,7 +27,6 @@ public class ProntoLift implements Pronstants{
 		notAtTop = true;
 		notAtBottom = true;
 		readyForNextTote = false;
-		toteCount = 0;
 		
 		state = LiftStates.Stopped;
 	}

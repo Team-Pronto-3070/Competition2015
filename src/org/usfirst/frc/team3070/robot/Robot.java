@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CameraServer camera;
 
-	double x, y, z, speedLevel;
+	double x, y, z;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,11 +45,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift2 = new CANTalon(M_LIFT2_ID);
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
-
-		upperLimit = new DigitalInput(UPPER_LIMIT_ID);
-		lowerLimit = new DigitalInput(LOWER_LIMIT_ID);
-		toteLimit = new DigitalInput(TOTE_LIMIT_ID);
-
+		
 		mFrontLeft.setVoltageRampRate(RAMP_RATE);
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
@@ -57,6 +53,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
 		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
+		
+		upperLimit = new DigitalInput(UPPER_LIMIT_ID);
+		lowerLimit = new DigitalInput(LOWER_LIMIT_ID);
+		toteLimit = new DigitalInput(TOTE_LIMIT_ID);
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
@@ -69,7 +69,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
-		speedLevel = 0.0;
 	}
 
 	public void autonomousInit() {
@@ -84,7 +83,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		mechDrive.setPos(0, 1000, 0);
+		
 	}
 
 	public void teleopInit() {
@@ -97,7 +96,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void teleopPeriodic() {
 		getJoystickInput();
 
-		mechDrive.drive(x, y, z, speedLevel);
+		mechDrive.drive(x, y, z);
 
 		lifter.periodic();
 		loader.periodic();
@@ -123,7 +122,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = jLeft.getX();
 		y = jLeft.getY();
 		z = jRight.getX();
-		speedLevel = jLeft.getZ();
 	}
 
 	private void printToSmartDashboard() {

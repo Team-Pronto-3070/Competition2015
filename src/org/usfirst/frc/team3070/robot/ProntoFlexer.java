@@ -19,8 +19,8 @@ public class ProntoFlexer implements Pronstants {
 		flexer = f;
 		jLeft = x;
 		state = Flexstates.FlexerStoppedExpanded;
-		timeCounter = 0;
 		
+		timeCounter = 0;
 		flexedIn = false;
 	}
 
@@ -103,8 +103,9 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppingIn {
 			@Override
 			public Flexstate check() {
-				flexStop();
 				flexedIn = true;
+				
+				flexStop();
 				timeCounter = 0;
 				return FlexerStoppedContracted;
 			}
@@ -113,8 +114,9 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppingOut {
 			@Override
 			public Flexstate check() {
-				flexStop();
 				flexedIn = false;
+				
+				flexStop();
 				timeCounter = 0;
 				return FlexerStoppedExpanded;
 			}
