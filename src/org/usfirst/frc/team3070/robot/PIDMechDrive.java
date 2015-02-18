@@ -42,7 +42,6 @@ public class PIDMechDrive implements Pronstants {
 		x = checkForDeadzone(x);
 		y = checkForDeadzone(y);
 		rotation = checkForDeadzone(rotation);
-		//speedCoeff = convertToSpeedLevel(spdLvl);
 				
 		x = convertToEncValue(x);
 		y = convertToEncValue(y);
