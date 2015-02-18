@@ -14,7 +14,6 @@ public class ProntoLift implements Pronstants{
 	static Joystick jRight;
 	static DigitalInput lower, upper, tote;
 	static boolean notAtTop, notAtBottom, readyForNextTote;
-	static int toteCount;
 	LiftState state;
 
 	public ProntoLift(CANTalon m1, CANTalon m2, DigitalInput u, DigitalInput l,
@@ -27,7 +26,7 @@ public class ProntoLift implements Pronstants{
 		jRight = r;
 		notAtTop = true;
 		notAtBottom = true;
-		toteCount = 0;
+		readyForNextTote = false;
 		
 		state = LiftStates.Stopped;
 	}
@@ -37,10 +36,12 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (notAtTop && jRight.getRawButton(3)) {
+					readyForNextTote = false;
 					return StartLiftUp;
 				}
 
 				if (notAtBottom && jRight.getRawButton(2)) {
+					readyForNextTote = false;
 					return StartLiftDown;
 				}
 
@@ -50,7 +51,7 @@ public class ProntoLift implements Pronstants{
 		StartLiftUp {
 			@Override
 			public LiftState check() {
-				lift(LIFT_SPEED);
+				setLift(LIFT_SPEED);
 				notAtBottom = true;
 				return LiftingUp;
 			}
@@ -78,9 +79,10 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (!tote.get()) {
-					lift(.4);
+					setLift(.4);
 				} else {
-					lift(0);
+					readyForNextTote = true;
+					setLift(0);
 				}
 				if (!jRight.getRawButton(3)) {
 					return Stopping;
@@ -92,7 +94,7 @@ public class ProntoLift implements Pronstants{
 		StartLiftDown {
 			@Override
 			public LiftState check() {
-				lift(-LIFT_SPEED);
+				setLift(-LIFT_SPEED);
 				notAtTop = true;
 				return LiftingDown;
 			}
@@ -114,7 +116,7 @@ public class ProntoLift implements Pronstants{
 		Stopping {
 			@Override
 			public LiftState check() {
-				lift(0);
+				setLift(0);
 				return Stopped;
 			}
 		}
@@ -125,10 +127,10 @@ public class ProntoLift implements Pronstants{
 	}
 	
 	public void stopPeriodic() {
-		lift(0);
+		setLift(0);
 	}
 	
-	private static void lift(double speed) {
+	private static void setLift(double speed) {
 		motor1.set(-speed);
 		motor2.set(speed);
 	}

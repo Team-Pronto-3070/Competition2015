@@ -14,17 +14,21 @@ public class PIDMechDrive implements Pronstants {
 		
 		setControlModeSpeed();
 		
-		frontRight.reverseSensor(true);
-		rearRight.reverseSensor(true);
-		
-		frontLeft.reverseOutput(true);
-		rearLeft.reverseOutput(true);
-		
 		frontLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		frontRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rearLeft.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		rearRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 
+		frontRight.reverseSensor(true);
+		rearRight.reverseSensor(true);
+		frontLeft.reverseSensor(false);
+		rearLeft.reverseSensor(false);
+		
+		frontLeft.reverseOutput(true);
+		rearLeft.reverseOutput(true);
+		frontRight.reverseOutput(false);		
+		rearRight.reverseOutput(false);		
+		
 		frontLeft.setPID(KP, KI, KD);
 		frontRight.setPID(KP, KI, KD);
 		rearLeft.setPID(KP, KI, KD);
@@ -47,7 +51,7 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.set(x + y - rotation);
 	}
 	
-	public void positionDrive(double x, double y, double rotation) {
+	public void setPos(double x, double y, double rotation) {
 		frontLeft.set(x + y + rotation);
 		frontRight.set(-x + y - rotation);
 		rearLeft.set(-x + y + rotation);
@@ -59,19 +63,6 @@ public class PIDMechDrive implements Pronstants {
 		frontRight.setPosition(0);
 		rearLeft.setPosition(0);
 		rearRight.setPosition(0);
-	}
-	
-	private double checkForDeadzone(double a) {
-		if (Math.abs(a) < DEADZONE) {
-			a = 0.0;
-		}
-		
-		return a;
-		
-	}
-
-	private double convertToEncValue(double x) {
-		return x * ENCODER_MAX_SPEED;
 	}
 	
 	public void setControlModeSpeed() {
@@ -87,4 +78,27 @@ public class PIDMechDrive implements Pronstants {
 		rearLeft.changeControlMode(CANTalon.ControlMode.Position);
 		rearRight.changeControlMode(CANTalon.ControlMode.Position);
 	}
+
+	public void setAllPID(double kP, double kI, double kD){
+		frontLeft.setPID(kP, kI, kD);
+		frontRight.setPID(kP, kI, kD);
+		rearLeft.setPID(kP, kI, kD);
+		rearRight.setPID(kP, kI, kD);
+	}
+	
+	private double checkForDeadzone(double a) {
+		if (Math.abs(a) < DEADZONE) {
+			a = 0.0;
+		}
+		a = Math.pow(a, 3);
+		
+		return a;
+		
+	}
+
+	private double convertToEncValue(double x) {
+		return x * ENCODER_MAX_SPEED;
+	}
+	
+	
 }

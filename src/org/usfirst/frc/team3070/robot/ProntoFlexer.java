@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.CANTalon;
 
 public class ProntoFlexer implements Pronstants {
 
@@ -9,28 +9,35 @@ public class ProntoFlexer implements Pronstants {
 		public Flexstate check();
 	}
 
-	static SpeedController flexer;
+	static CANTalon flexer;
 	static Joystick jLeft;
 	static int timeCounter;
+	static boolean flexedIn;
 	Flexstate state;
 	
-	public ProntoFlexer(SpeedController f, Joystick x) {
+	public ProntoFlexer(CANTalon f, Joystick x) {
 		flexer = f;
 		jLeft = x;
 		state = Flexstates.FlexerStoppedExpanded;
+		
 		timeCounter = 0;
+		flexedIn = false;
 	}
 
 	enum Flexstates implements Flexstate {
 		FlexerStoppedExpanded {
 			@Override
 			public Flexstate check() {
+				flexedIn = false;
+				
 				if (jLeft.getRawButton(3))
 					return StartFlexIn;
 				
-				if (jLeft.getRawButton(11))
-					return StartFlexOut;
-
+				if(jLeft.getRawButton(11) && jLeft.getRawButton(6)) {
+					if (jLeft.getRawButton(2))
+						return StartFlexOut;
+				}
+				
 				// else
 				return FlexerStoppedExpanded;
 			}
@@ -38,11 +45,15 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppedContracted {
 			@Override
 			public Flexstate check() {
+				flexedIn = true;
+				
 				if (jLeft.getRawButton(3))
 					return StartFlexOut;
 				
-				if (jLeft.getRawButton(11))
-					return StartFlexIn;
+				if(jLeft.getRawButton(11) && jLeft.getRawButton(6)) {
+					if (jLeft.getRawButton(2))
+						return StartFlexIn;
+				}
 				
 				// else
 				return FlexerStoppedContracted;
@@ -68,7 +79,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingIn {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= FLEX_LIMIT)
+				if (timeCounter >= NUM_TICKS)
 					return FlexerStoppingIn;
 
 				// else
@@ -80,7 +91,7 @@ public class ProntoFlexer implements Pronstants {
 		FlexingOut {
 			@Override
 			public Flexstate check() {
-				if (timeCounter >= FLEX_LIMIT)
+				if (timeCounter >= NUM_TICKS)
 					return FlexerStoppingOut;
 
 				// else
@@ -92,6 +103,8 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppingIn {
 			@Override
 			public Flexstate check() {
+				flexedIn = true;
+				
 				flexStop();
 				timeCounter = 0;
 				return FlexerStoppedContracted;
@@ -101,6 +114,8 @@ public class ProntoFlexer implements Pronstants {
 		FlexerStoppingOut {
 			@Override
 			public Flexstate check() {
+				flexedIn = false;
+				
 				flexStop();
 				timeCounter = 0;
 				return FlexerStoppedExpanded;

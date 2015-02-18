@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.CANTalon;
 
 public class ProntoLoader implements Pronstants {
 
@@ -9,11 +9,11 @@ public class ProntoLoader implements Pronstants {
 		public Loadstate check();
 	}
 
-	static SpeedController loader, flexer;
+	static CANTalon loader, flexer;
 	static Joystick jLeft, jRight;
 	Loadstate state;
 	
-	public ProntoLoader(SpeedController l, Joystick jL, Joystick jR) {
+	public ProntoLoader(CANTalon l, Joystick jL, Joystick jR) {
 		loader = l;
 		jLeft = jL;
 		jRight = jR;
