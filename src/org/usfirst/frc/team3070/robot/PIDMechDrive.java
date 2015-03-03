@@ -72,6 +72,7 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.changeControlMode(CANTalon.ControlMode.Speed);
 	}
 	
+	//
 	public void setControlModePosition() {
 		frontLeft.changeControlMode(CANTalon.ControlMode.Position);
 		frontRight.changeControlMode(CANTalon.ControlMode.Position);

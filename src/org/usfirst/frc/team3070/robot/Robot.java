@@ -13,20 +13,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot implements Pronstants {
-
+	//mecanum wheels
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight;
+	//pulley motors
 	CANTalon mLift1, mLift2;
+	//loader and flexer motors
 	CANTalon mLoader, mFlexer;
 	
+	//reed switches
 	DigitalInput upperlimit, lowerlimit, totelimit;
 	
+	//the two joysticks
 	Joystick jLeft, jRight;
 
+	//instances of other classes
 	PIDMechDrive mechDrive;
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	
+	//mecanum wheel variables
 	double x, y, z;
 
 	/**
@@ -34,34 +40,37 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
-		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
-		mRearLeft = new CANTalon(M_REAR_LEFT_ID);
-		mRearRight = new CANTalon(M_REAR_RIGHT_ID);
-		mLift1 = new CANTalon(M_LIFT1_ID);
-		mLift2 = new CANTalon(M_LIFT2_ID);
-		mLoader = new CANTalon(M_LOADER_ID);
-		mFlexer = new CANTalon(M_FLEXER_ID);
+		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
+		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //2
+		mRearLeft = new CANTalon(M_REAR_LEFT_ID); //5
+		mRearRight = new CANTalon(M_REAR_RIGHT_ID); //4
+		mLift1 = new CANTalon(M_LIFT1_ID); //8
+		mLift2 = new CANTalon(M_LIFT2_ID); //9
+		mLoader = new CANTalon(M_LOADER_ID); //7
+		mFlexer = new CANTalon(M_FLEXER_ID); //6
 		
-		mFrontLeft.setVoltageRampRate(RAMP_RATE);
+		mFrontLeft.setVoltageRampRate(RAMP_RATE); //all 30
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
 
-		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
-		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
+		jLeft = new Joystick(LEFT_JOYSTICK_PORT); //1
+		jRight = new Joystick(RIGHT_JOYSTICK_PORT); //2
 		
-		upperlimit = new DigitalInput(UPPER_LIMIT_ID);
-		lowerlimit = new DigitalInput(LOWER_LIMIT_ID);
-		totelimit = new DigitalInput(TOTE_LIMIT_ID);
+		upperlimit = new DigitalInput(UPPER_LIMIT_ID); //1
+		lowerlimit = new DigitalInput(LOWER_LIMIT_ID); //2
+		totelimit = new DigitalInput(TOTE_LIMIT_ID); //3
 
+		//assigns the variables to the mecanum wheels
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight);
 		
+		//assigns the variables to the lifter, loader, and flexer
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 
+		//variables for the mecanum drive
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
