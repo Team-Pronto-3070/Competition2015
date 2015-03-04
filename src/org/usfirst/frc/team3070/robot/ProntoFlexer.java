@@ -8,23 +8,35 @@ public class ProntoFlexer implements Pronstants {
 	interface Flexstate {
 		public Flexstate check();
 	}
+	// syntax
 
 	static CANTalon flexer;
 	static Joystick jLeft;
+	// creates objects for the class
+	
 	static int timeCounter;
 	static boolean flexedIn;
+	// creates variables
+	
 	Flexstate state;
+	// keeps track of what state the class is in
 	
 	public ProntoFlexer(CANTalon f, Joystick x) {
 		flexer = f;
 		jLeft = x;
+		// setting the class objects to the given objects
+		
 		state = Flexstates.FlexerStoppedExpanded;
+		// sets the default tracker to the stopped state
 		
 		timeCounter = 0;
 		flexedIn = false;
 	}
 
 	enum Flexstates implements Flexstate {
+		/*
+		 * starts in the expanded state and contracts if 2 on the left joystick is pressed
+		 */
 		FlexerStoppedExpanded {
 			@Override
 			public Flexstate check() {
