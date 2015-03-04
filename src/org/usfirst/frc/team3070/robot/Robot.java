@@ -5,63 +5,59 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+
+
 public class Robot extends IterativeRobot implements Pronstants {
 
-	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight;
-	CANTalon mLift1, mLift2;
-	CANTalon mLoader, mFlexer;
+	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight; //mecanum wheel motors
+	CANTalon mLift1, mLift2; //lift motors
+	CANTalon mLoader, mFlexer; //loader and flexer motors
 	
-	DigitalInput upperlimit, lowerlimit, totelimit;
+	DigitalInput upperlimit, lowerlimit, totelimit; //reed switches
 	
-	Joystick jLeft, jRight;
+	Joystick jLeft, jRight; //joysticks
 
-	PIDMechDrive mechDrive;
+	//instances of mecanum wheels, lifter, loader, and flexer
+	PIDMechDrive mechDrive; 
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	
-	double x, y, z;
+	double x, y, z; //mecanum drive variables
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	
+	
 	public void robotInit() {
-		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
-		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
-		mRearLeft = new CANTalon(M_REAR_LEFT_ID);
-		mRearRight = new CANTalon(M_REAR_RIGHT_ID);
-		mLift1 = new CANTalon(M_LIFT1_ID);
-		mLift2 = new CANTalon(M_LIFT2_ID);
-		mLoader = new CANTalon(M_LOADER_ID);
-		mFlexer = new CANTalon(M_FLEXER_ID);
+		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
+		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //2
+		mRearLeft = new CANTalon(M_REAR_LEFT_ID); //5
+		mRearRight = new CANTalon(M_REAR_RIGHT_ID); //4
+		mLift1 = new CANTalon(M_LIFT1_ID); //8
+		mLift2 = new CANTalon(M_LIFT2_ID); //9
+		mLoader = new CANTalon(M_LOADER_ID); //7
+		mFlexer = new CANTalon(M_FLEXER_ID); //6
 		
-		mFrontLeft.setVoltageRampRate(RAMP_RATE);
+		mFrontLeft.setVoltageRampRate(RAMP_RATE); //30
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
 
-		jLeft = new Joystick(LEFT_JOYSTICK_PORT);
-		jRight = new Joystick(RIGHT_JOYSTICK_PORT);
+		jLeft = new Joystick(LEFT_JOYSTICK_PORT); //1
+		jRight = new Joystick(RIGHT_JOYSTICK_PORT); //2
 		
-		upperlimit = new DigitalInput(UPPER_LIMIT_ID);
-		lowerlimit = new DigitalInput(LOWER_LIMIT_ID);
-		totelimit = new DigitalInput(TOTE_LIMIT_ID);
+		upperlimit = new DigitalInput(UPPER_LIMIT_ID); //1
+		lowerlimit = new DigitalInput(LOWER_LIMIT_ID); //2
+		totelimit = new DigitalInput(TOTE_LIMIT_ID); //3
 
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
-				mRearRight);
+				mRearRight); //declares the mecanum drive
 		
+		//declares lifter, loader, flexer
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 
+		//mecanum drive variables
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
@@ -73,9 +69,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
 	public void autonomousPeriodic() {
 	
 	}
@@ -84,41 +77,42 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive.setControlModeSpeed();
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
 	public void teleopPeriodic() {
+		//checks if anything is triggered
 		getJoystickInput();
 
+		//move
 		mechDrive.drive(x, y, z);
 
-		lifter.periodic();
+		//checks for updates for lifter, loader, and flexer
+		lifter.periodic(); 
 		loader.periodic();
 		flexer.periodic();
 		
+		//Junk code
 		printToSmartDashboard();
 	}
 
 	public void disabledInit() {
+		//stops lifter, loader, and flexer
 		lifter.stopPeriodic();
 		loader.stopPeriodic();
 		flexer.stopPeriodic();
 	}
 
-
-	/**
-	 * This function is called periodically during test mode
-	 */
 	public void testPeriodic() {
 
 	}
 	
+	//ignore this
 	private void printToSmartDashboard(){
 		SmartDashboard.putBoolean(" At Top ", !ProntoLift.notAtTop);
 		SmartDashboard.putBoolean(" At Bottom ", !ProntoLift.notAtBottom);
 		SmartDashboard.putBoolean(" Ready For Tote ", ProntoLift.readyForNextTote);
 		SmartDashboard.putBoolean(" Flexer Contracted ", ProntoFlexer.flexedIn);
 	}
+	
+	//Checks if the joysticks have moved at all
 	private void getJoystickInput(){
 		x = jLeft.getX();
 		y = jLeft.getY();

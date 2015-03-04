@@ -9,10 +9,12 @@ public class ProntoLoader implements Pronstants {
 		public Loadstate check();
 	}
 
+	//import stuff
 	static CANTalon loader, flexer;
 	static Joystick jLeft, jRight;
 	Loadstate state;
 	
+	//prepares joysticks and CANTalons
 	public ProntoLoader(CANTalon l, Joystick jL, Joystick jR) {
 		loader = l;
 		jLeft = jL;
@@ -23,10 +25,15 @@ public class ProntoLoader implements Pronstants {
 	enum Loadstates implements Loadstate {
 		LoaderStopped {
 			@Override
+			//checks if buttons are pressed
 			public Loadstate check() {
+				//if right joystick button 1 is pressed
+				//moves inwards
 				if (jRight.getRawButton(1))
 					return StartLoadIn;
-
+				
+				//if left joystick button 1 is pressed
+				//moves outwards
 				if (jLeft.getRawButton(1))
 					return StartLoadOut;
 
@@ -34,7 +41,8 @@ public class ProntoLoader implements Pronstants {
 				return LoaderStopped;
 			}
 		},
-
+		
+		//loader moves inwards
 		StartLoadIn {
 			public Loadstate check() {
 				loadIn();
@@ -43,6 +51,7 @@ public class ProntoLoader implements Pronstants {
 
 		},
 
+		//loader moves outwaards
 		StartLoadOut {
 			public Loadstate check() {
 				loadOut();
@@ -50,8 +59,11 @@ public class ProntoLoader implements Pronstants {
 			}
 		},
 
+		//while loader is moving in
 		LoadingIn {
 			public Loadstate check() {
+				//if right joystick button 1 isn't pressed
+				//stops loader
 				if (!jRight.getRawButton(1))
 					return LoaderStopping;
 				
@@ -60,8 +72,11 @@ public class ProntoLoader implements Pronstants {
 			}
 		},
 
+		//while loader is moving out
 		LoadingOut {
 			public Loadstate check() {
+				//if left joystick button 1 isn't pressed
+				//stops loader
 				if (!jLeft.getRawButton(1))
 					return LoaderStopping;
 				
@@ -70,6 +85,7 @@ public class ProntoLoader implements Pronstants {
 			}
 		},
 
+		//stops loader
 		LoaderStopping {
 			public Loadstate check() {
 				loadStop();
@@ -78,22 +94,27 @@ public class ProntoLoader implements Pronstants {
 		}
 	}
 	
+	//runs the state function
 	public void periodic() {
 		state = state.check();
 	}
 	
+	//stops the loader
 	public void stopPeriodic() {
 		loadStop();
 	}
 	
+	//makes loader move in
 	private static void loadIn() {
 		loader.set(LOAD_SPEED);
 	}
-	
+
+	//makes loader move out
 	private static void loadOut() {
 		loader.set(-LOAD_SPEED);
 	}
 	
+	//stops the loader
 	private static void loadStop() {
 		loader.set(0);
 	}

@@ -1,23 +1,6 @@
 package org.usfirst.frc.team3070.robot;
 
 public interface Pronstants {
-	/*
-	 * Occupied Buttons:
-	 * Left Joystick:
-	 * Trigger - Load out
-	 * 3 - Expand/Contract loader
-	 * 
-	 * Right Joystick:
-	 * Trigger - Load in
-	 * 2 - Lift down
-	 * 3 - Lift up
-	 */
-	
-	/* Joystick Notes:
-	 * Triggers only go in the positive.
-	 * Forward on the Y-Axes is in the negative
-	 */
-	
 	// CANTalons
 	// used in: Robot.java
 	public static final int M_FRONT_RIGHT_ID = 2;
