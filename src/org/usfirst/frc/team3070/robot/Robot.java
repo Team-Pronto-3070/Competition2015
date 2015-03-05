@@ -5,14 +5,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+
+
 public class Robot extends IterativeRobot implements Pronstants {
+<<<<<<< HEAD
 	//mecanum wheels
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight;
 	//pulley motors
@@ -28,17 +24,32 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	//instances of other classes
 	PIDMechDrive mechDrive;
+=======
+
+	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight; //mecanum wheel motors
+	CANTalon mLift1, mLift2; //lift motors
+	CANTalon mLoader, mFlexer; //loader and flexer motors
+	
+	DigitalInput upperlimit, lowerlimit, totelimit; //reed switches
+	
+	Joystick jLeft, jRight; //joysticks
+
+	//instances of mecanum wheels, lifter, loader, and flexer
+	PIDMechDrive mechDrive; 
+>>>>>>> origin/Dual-Joystick
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	
+<<<<<<< HEAD
 	//mecanum wheel variables
 	double x, y, z;
+=======
+	double x, y, z; //mecanum drive variables
+>>>>>>> origin/Dual-Joystick
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	
+	
 	public void robotInit() {
 		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
 		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //2
@@ -49,7 +60,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLoader = new CANTalon(M_LOADER_ID); //7
 		mFlexer = new CANTalon(M_FLEXER_ID); //6
 		
+<<<<<<< HEAD
 		mFrontLeft.setVoltageRampRate(RAMP_RATE); //all 30
+=======
+		mFrontLeft.setVoltageRampRate(RAMP_RATE); //30
+>>>>>>> origin/Dual-Joystick
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
@@ -63,14 +78,22 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 		//assigns the variables to the mecanum wheels
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
-				mRearRight);
+				mRearRight); //declares the mecanum drive
 		
+<<<<<<< HEAD
 		//assigns the variables to the lifter, loader, and flexer
+=======
+		//declares lifter, loader, flexer
+>>>>>>> origin/Dual-Joystick
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 
+<<<<<<< HEAD
 		//variables for the mecanum drive
+=======
+		//mecanum drive variables
+>>>>>>> origin/Dual-Joystick
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
@@ -82,9 +105,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
 	public void autonomousPeriodic() {
 	
 	}
@@ -93,41 +113,42 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive.setControlModeSpeed();
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
 	public void teleopPeriodic() {
+		//checks if anything is triggered
 		getJoystickInput();
 
+		//move
 		mechDrive.drive(x, y, z);
 
-		lifter.periodic();
+		//checks for updates for lifter, loader, and flexer
+		lifter.periodic(); 
 		loader.periodic();
 		flexer.periodic();
 		
+		//Junk code
 		printToSmartDashboard();
 	}
 
 	public void disabledInit() {
+		//stops lifter, loader, and flexer
 		lifter.stopPeriodic();
 		loader.stopPeriodic();
 		flexer.stopPeriodic();
 	}
 
-
-	/**
-	 * This function is called periodically during test mode
-	 */
 	public void testPeriodic() {
 
 	}
 	
+	//ignore this
 	private void printToSmartDashboard(){
 		SmartDashboard.putBoolean(" At Top ", !ProntoLift.notAtTop);
 		SmartDashboard.putBoolean(" At Bottom ", !ProntoLift.notAtBottom);
 		SmartDashboard.putBoolean(" Ready For Tote ", ProntoLift.readyForNextTote);
 		SmartDashboard.putBoolean(" Flexer Contracted ", ProntoFlexer.flexedIn);
 	}
+	
+	//Checks if the joysticks have moved at all
 	private void getJoystickInput(){
 		x = jLeft.getX();
 		y = jLeft.getY();
