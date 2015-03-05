@@ -8,24 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends IterativeRobot implements Pronstants {
-<<<<<<< HEAD
-	//mecanum wheels
-	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight;
-	//pulley motors
-	CANTalon mLift1, mLift2;
-	//loader and flexer motors
-	CANTalon mLoader, mFlexer;
-	
-	//reed switches
-	DigitalInput upperlimit, lowerlimit, totelimit;
-	
-	//the two joysticks
-	Joystick jLeft, jRight;
-
-	//instances of other classes
-	PIDMechDrive mechDrive;
-=======
-
 	CANTalon mFrontLeft, mFrontRight, mRearLeft, mRearRight; //mecanum wheel motors
 	CANTalon mLift1, mLift2; //lift motors
 	CANTalon mLoader, mFlexer; //loader and flexer motors
@@ -36,19 +18,13 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	//instances of mecanum wheels, lifter, loader, and flexer
 	PIDMechDrive mechDrive; 
->>>>>>> origin/Dual-Joystick
+
 	ProntoLift lifter;
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	
-<<<<<<< HEAD
 	//mecanum wheel variables
 	double x, y, z;
-=======
-	double x, y, z; //mecanum drive variables
->>>>>>> origin/Dual-Joystick
-
-	
 	
 	public void robotInit() {
 		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
@@ -60,11 +36,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLoader = new CANTalon(M_LOADER_ID); //7
 		mFlexer = new CANTalon(M_FLEXER_ID); //6
 		
-<<<<<<< HEAD
-		mFrontLeft.setVoltageRampRate(RAMP_RATE); //all 30
-=======
 		mFrontLeft.setVoltageRampRate(RAMP_RATE); //30
->>>>>>> origin/Dual-Joystick
 		mFrontRight.setVoltageRampRate(RAMP_RATE);
 		mRearRight.setVoltageRampRate(RAMP_RATE);
 		mRearLeft.setVoltageRampRate(RAMP_RATE);
@@ -80,20 +52,12 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight); //declares the mecanum drive
 		
-<<<<<<< HEAD
 		//assigns the variables to the lifter, loader, and flexer
-=======
-		//declares lifter, loader, flexer
->>>>>>> origin/Dual-Joystick
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 
-<<<<<<< HEAD
-		//variables for the mecanum drive
-=======
 		//mecanum drive variables
->>>>>>> origin/Dual-Joystick
 		x = 0.0;
 		y = 0.0;
 		z = 0.0;
