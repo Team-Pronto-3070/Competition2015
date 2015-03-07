@@ -76,8 +76,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		//if in the first state
 		if (autoState == 1){
-			//drives back(hopefully) 200 encoder units, which may or may not be enough to make it into the scoring zone, need to test.
-			driveBack();
+			
 		}
 	}
 	
@@ -125,6 +124,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = jLeft.getX();
 		y = jLeft.getY();
 		z = jRight.getX();
+	}
+	
+	private void pickUp(){
+		
 	}
 	
 	private void driveBack(){
