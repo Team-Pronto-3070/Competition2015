@@ -23,6 +23,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	ProntoLoader loader;
 	ProntoFlexer flexer;
 	
+	Timer timer;
+	
 	//mecanum wheel variables
 	double x, y, z;
 	
@@ -76,8 +78,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		//if in the first state
 		if (autoState == 1){
-			//drives back(hopefully) 200 encoder units, which may or may not be enough to make it into the scoring zone, need to test.
-			driveBack();
+			readyLifter();
+		} else if(autoState == 2){
+			pickUp();
+		} else if(autoState == 3){
+			driveBack(200.0);
+		} else if(autoState == 4){
+			putDown();
+		} else if(autoState == 5){
+			driveBack(10.0);
 		}
 	}
 	
@@ -127,7 +136,38 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = jRight.getX();
 	}
 	
-	private void driveBack(){
-		mechDrive.setPos(0.0, -200.0, 0.0);
+	private void driveBack(double x){
+		mechDrive.setPos(0.0, -x, 0.0);
+		autoState = autoState++;
+	}
+	
+	private void pickUp(){
+		timer.reset();
+		mLift1.set(-LIFT_SPEED);
+		mLift2.set(LIFT_SPEED);
+		timer.delay(1);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
+	}
+	
+	private void readyLifter(){
+		timer.reset();
+		mLift1.set(-LIFT_SPEED);
+		mLift2.set(LIFT_SPEED);
+		timer.delay(1.0);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
+	}
+	
+	private void putDown(){
+		timer.reset();
+		mLift1.set(LIFT_SPEED);
+		mLift2.set(-LIFT_SPEED);
+		timer.delay(1.0);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
 	}
 }
