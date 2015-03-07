@@ -26,6 +26,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	//mecanum wheel variables
 	double x, y, z;
 	
+	//autonomous state
+	int autoState = 0;
+	
 	public void robotInit() {
 		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID); //3
 		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); //2
@@ -66,11 +69,16 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousInit() {
 		mechDrive.setControlModePosition();
 		mechDrive.resetPosition();
-
+		//sets it to the first state
+		autoState = 1;
 	}
 
 	public void autonomousPeriodic() {
-	
+		//if in the first state
+		if (autoState == 1){
+			//drives back(hopefully) 200 encoder units, which may or may not be enough to make it into the scoring zone, need to test.
+			driveBack();
+		}
 	}
 	
 	public void teleopInit() {
@@ -117,5 +125,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		x = jLeft.getX();
 		y = jLeft.getY();
 		z = jRight.getX();
+	}
+	
+	private void driveBack(){
+		mechDrive.setPos(0.0, -200.0, 0.0);
 	}
 }
