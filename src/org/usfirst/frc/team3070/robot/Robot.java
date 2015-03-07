@@ -96,7 +96,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		
+		// Example: mechDrive.setPos(0, 2000, 0);
+		// goes 2000 encoder units straight
 	}
 
 	public void teleopInit() {
