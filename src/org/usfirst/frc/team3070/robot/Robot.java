@@ -92,6 +92,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 		//Junk code
 		printToSmartDashboard();
 		System.out.println(mFlexer.getEncPosition());
+		System.out.println(mRearRight.getEncVelocity());
+		System.out.println(mRearLeft.getEncVelocity());
+		System.out.println(mFrontRight.getEncVelocity());
+		System.out.println(mFrontLeft.getEncVelocity());
 	}
 
 	public void disabledInit() {
