@@ -21,7 +21,7 @@ public interface Pronstants {
 	// used in: Robot.java, PIDMechDrive.java
 	public static final int LEFT_JOYSTICK_PORT = 1;
 	public static final int RIGHT_JOYSTICK_PORT = 2;
-	public static final double DEADZONE = 0.2;
+	public static final double DEADZONE = 0.15;
 	
 	// PID
 	// used in: PIDMechDrive.java

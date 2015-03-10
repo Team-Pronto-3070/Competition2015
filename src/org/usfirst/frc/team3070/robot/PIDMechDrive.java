@@ -103,7 +103,7 @@ public class PIDMechDrive implements Pronstants {
 		if (Math.abs(a) < DEADZONE) {
 			a = 0.0;
 		}
-		a = Math.pow(a, 3);
+		a = Math.pow(a, 2);
 		
 		return a;
 		
