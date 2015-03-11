@@ -78,9 +78,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		//if in the first state
 		if (autoState == 1){
-<<<<<<< HEAD
-			
-=======
 			readyLifter();
 		} else if(autoState == 2){
 			pickUp();
@@ -90,7 +87,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 			putDown();
 		} else if(autoState == 5){
 			driveBack(200.0);
->>>>>>> origin/Autonomous2
 		}
 	}
 	
@@ -140,14 +136,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = jRight.getX();
 	}
 	
-<<<<<<< HEAD
-	private void pickUp(){
-		
-	}
-	
-	private void driveBack(){
-		mechDrive.setPos(0.0, -200.0, 0.0);
-=======
 	private void driveBack(double x){
 		mechDrive.setPos(0.0, -x, 0.0);
 		autoState = autoState++;
@@ -193,6 +181,5 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift1.set(0.0);
 		mLift2.set(0.0);
 		autoState = autoState++;
->>>>>>> origin/Autonomous2
 	}
 }
