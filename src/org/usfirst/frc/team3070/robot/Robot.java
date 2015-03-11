@@ -178,4 +178,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		camera.startAutomaticCapture();
 		// start recording
 	}
+	
+	private void driveBack(){
+		mechDrive.setPos(0.0, -1000.0, 0.0);
+	}
 }
