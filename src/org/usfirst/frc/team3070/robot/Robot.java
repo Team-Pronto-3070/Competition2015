@@ -226,12 +226,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mLift1.set(0);
 		mLift2.set(0);
+		
+		autoState++;
 	}
 	
 	private void move(int distance) {
 		mechDrive.resetPosition();
 		mechDrive.setPos(0, distance, 0);
 		
+		autoState++;
 //		int subDistance = distance / 4;
 //		
 //		for (int i = 0; i < 4; i++) {
@@ -252,6 +255,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mLift1.set(0);
 		mLift2.set(0);
+		
+		autoState++;
 	}
 	
 	private void liftDown() {
@@ -269,6 +274,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mLift1.set(0);
 		mLift2.set(0);
+		
+		autoState++;
 		
 		// tote should be unhooked
 	}
