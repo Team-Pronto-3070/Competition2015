@@ -118,6 +118,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		} else if(autoState == 5){
 			driveBack(200.0);
 		}
+		
+		System.out.println("State: " + autoState);
 	}
 
 	public void teleopInit() {
