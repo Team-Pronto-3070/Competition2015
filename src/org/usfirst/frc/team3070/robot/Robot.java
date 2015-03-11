@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,6 +35,10 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CameraServer camera;
 	// creating camera
+	
+	Timer timer;
+	
+	int autoState = 0;
 
 	double x, y, z;
 
@@ -90,6 +95,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mechDrive.resetPosition();
 		// zero the encoders
+		
+		autoState = 1;
 	}
 
 	/**
@@ -167,5 +174,40 @@ public class Robot extends IterativeRobot implements Pronstants {
 		camera.setQuality(0);
 		camera.startAutomaticCapture();
 		// start recording
+	}
+	
+	private void driveBack(double x){
+		mechDrive.setPos(0.0, -x, 0.0);
+		autoState = autoState++;
+	}
+	
+	private void pickUp(){
+		timer.reset();
+		mLift1.set(-LIFT_SPEED);
+		mLift2.set(LIFT_SPEED);
+		timer.delay(1.5);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
+	}
+	
+	private void readyLifter(){
+		timer.reset();
+		mLift1.set(-LIFT_SPEED);
+		mLift2.set(LIFT_SPEED);
+		timer.delay(1.0);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
+	}
+	
+	private void putDown(){
+		timer.reset();
+		mLift1.set(LIFT_SPEED);
+		mLift2.set(-LIFT_SPEED);
+		timer.delay(1.0);
+		mLift1.set(0.0);
+		mLift2.set(0.0);
+		autoState = autoState++;
 	}
 }
