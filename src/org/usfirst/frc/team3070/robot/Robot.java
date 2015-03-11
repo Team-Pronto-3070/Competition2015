@@ -105,6 +105,19 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		// Example: mechDrive.setPos(0, 2000, 0);
 		// goes 2000 encoder units straight
+		
+		//if in the first state
+		if (autoState == 1){
+			readyLifter();
+		} else if(autoState == 2){
+			pickUp();
+		} else if(autoState == 3){
+			driveBack(1000.0);
+		} else if(autoState == 4){
+			putDown();
+		} else if(autoState == 5){
+			driveBack(200.0);
+		}
 	}
 
 	public void teleopInit() {
