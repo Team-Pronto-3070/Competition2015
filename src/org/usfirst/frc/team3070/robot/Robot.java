@@ -34,6 +34,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CameraServer camera;
 	// creating camera
+	
+	int autoState = 0;
 
 	double x, y, z;
 
@@ -90,6 +92,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mechDrive.resetPosition();
 		// zero the encoders
+		
+		autoState = 1;
 	}
 
 	/**
@@ -98,6 +102,30 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		// Example: mechDrive.setPos(0, 2000, 0);
 		// goes 2000 encoder units straight
+		
+		switch (autoState) {
+		case 1:
+			readyLifter();
+			break;
+		case 2:
+			move(200);
+			break;
+		case 3:
+			liftUp();
+			break;
+		case 4:
+			move(-2000);
+		case 5:
+			liftDown();
+			break;
+		case 6:
+			move(-200);
+			break;
+		default:
+			break;
+		}
+		
+		System.out.println("State: " + autoState);
 	}
 
 	public void teleopInit() {
@@ -167,5 +195,81 @@ public class Robot extends IterativeRobot implements Pronstants {
 		camera.setQuality(0);
 		camera.startAutomaticCapture();
 		// start recording
+	}
+	
+	private void readyLifter() {
+		// set cars fully up
+		while (upperLimit.get()) {
+			mLift1.set(-LIFT_SPEED);
+			mLift2.set(-LIFT_SPEED);
+		}
+		
+		// stop cars
+		mLift1.set(0);
+		mLift2.set(0);
+		
+		// position a car to tote level
+		while (toteLimit.get()) {
+			// move up past the tote limit
+			mLift1.set(LIFT_SPEED);
+			mLift2.set(LIFT_SPEED);
+		}
+		
+		// stop the lift
+		mLift1.set(0);
+		mLift2.set(0);
+		
+		while (!toteLimit.get()) {
+			mLift1.set(-0.4);
+			mLift2.set(-0.4);
+		}
+		
+		mLift1.set(0);
+		mLift2.set(0);
+	}
+	
+	private void move(int distance) {
+		mechDrive.resetPosition();
+		mechDrive.setPos(0, distance, 0);
+		
+//		int subDistance = distance / 4;
+//		
+//		for (int i = 0; i < 4; i++) {
+//			mechDrive.resetPosition();
+//			mechDrive.setPos(0, subDistance, 0);
+//			while (mechDrive.rearLeft.getPosition() != subDistance) {
+//				// moving
+//			}
+//		}
+	}
+	
+	private void liftUp() {
+		while (upperLimit.get()) {
+			// while not fully up, lifting up
+			mLift1.set(-LIFT_SPEED);
+			mLift2.set(-LIFT_SPEED);
+		}
+		
+		mLift1.set(0);
+		mLift2.set(0);
+	}
+	
+	private void liftDown() {
+		while (lowerLimit.get()) {
+			// while not at the lowest tote level, lifting down
+			mLift1.set(LIFT_SPEED);
+			mLift2.set(LIFT_SPEED);
+		}
+		
+		while (!lowerLimit.get()) {
+			// move past the tote limit
+			mLift1.set(LIFT_SPEED);
+			mLift2.set(LIFT_SPEED);
+		}
+		
+		mLift1.set(0);
+		mLift2.set(0);
+		
+		// tote should be unhooked
 	}
 }
