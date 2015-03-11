@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	private void pickUp(){
 		timer.reset();
 		mLift1.set(-LIFT_SPEED);
-		mLift2.set(LIFT_SPEED);
+		mLift2.set(-LIFT_SPEED);
 		timer.delay(1.5);
 		mLift1.set(0.0);
 		mLift2.set(0.0);
@@ -207,7 +207,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	private void readyLifter(){
 		timer.reset();
 		mLift1.set(-LIFT_SPEED);
-		mLift2.set(LIFT_SPEED);
+		mLift2.set(-LIFT_SPEED);
 		timer.delay(1.0);
 		mLift1.set(0.0);
 		mLift2.set(0.0);
@@ -217,7 +217,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	private void putDown(){
 		timer.reset();
 		mLift1.set(LIFT_SPEED);
-		mLift2.set(-LIFT_SPEED);
+		mLift2.set(LIFT_SPEED);
 		timer.delay(1.0);
 		mLift1.set(0.0);
 		mLift2.set(0.0);
