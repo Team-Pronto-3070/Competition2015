@@ -82,11 +82,11 @@ public class Robot extends IterativeRobot implements Pronstants {
 		} else if(autoState == 2){
 			pickUp();
 		} else if(autoState == 3){
-			driveBack(200.0);
+			driveBack(1000.0);
 		} else if(autoState == 4){
 			putDown();
 		} else if(autoState == 5){
-			driveBack(10.0);
+			driveBack(200.0);
 		}
 	}
 	
@@ -159,6 +159,18 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift1.set(0.0);
 		mLift2.set(0.0);
 		autoState = autoState++;
+		
+//		// lift all the way up
+//		while (upperlimit.get()) {
+//			mLift1.set(-LIFT_SPEED);
+//		 	mLift2.set(LIFT_SPEED);
+//		 }
+//		
+//		// put a car at tote level
+//		while (totelimit.get()) {
+//			mLift1.set(LIFT_SPEED);
+//			mLift2.set(-LIFT_SPEED);
+//		}
 	}
 	
 	private void putDown(){
