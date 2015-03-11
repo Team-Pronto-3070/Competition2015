@@ -34,6 +34,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CameraServer camera;
 	// creating camera
+	
+	int autoState = 0;
 
 	double x, y, z;
 
@@ -90,6 +92,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		mechDrive.resetPosition();
 		// zero the encoders
+		
+		autoState = 1;
 	}
 
 	/**
@@ -98,6 +102,12 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		// Example: mechDrive.setPos(0, 2000, 0);
 		// goes 2000 encoder units straight
+		
+		//if in the first state
+		if (autoState == 1){
+			//drives back(hopefully) 200 encoder units, which may or may not be enough to make it into the scoring zone, need to test.
+			driveBack();
+		}
 	}
 
 	public void teleopInit() {
