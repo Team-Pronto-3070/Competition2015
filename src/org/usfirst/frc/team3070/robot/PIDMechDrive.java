@@ -100,12 +100,16 @@ public class PIDMechDrive implements Pronstants {
 	
 	//Check for deadzone
 	private double checkForDeadzone(double a) {
+		int negativeCheck = 1;
+		if (a < 0) {
+			negativeCheck = -1;
+		}
 		if (Math.abs(a) < DEADZONE) {
 			a = 0.0;
 		}
 		a = Math.pow(a, 2);
 		
-		return a;
+		return a * negativeCheck;
 		
 	}
 
