@@ -45,6 +45,7 @@ public interface Pronstants {
 	public static final double KP = 1.25;
 	public static final double KI = 0.0;
 	public static final double KD = 0.0;
+	public static final double AUTO_KP = 0.75;
 	
 	// Static velocities
 	// used in: all classes

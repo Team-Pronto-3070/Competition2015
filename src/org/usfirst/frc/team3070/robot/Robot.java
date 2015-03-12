@@ -93,6 +93,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive.resetPosition();
 		// zero the encoders
 		
+		mechDrive.setAllPID(AUTO_KP, KI, KD);
+		// set slower P value
+		
 		autoState = 1;
 	}
 
@@ -102,24 +105,26 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		// Example: mechDrive.setPos(0, 2000, 0);
 		// goes 2000 encoder units straight
+
+		// 1000 is about 16 inches
 		
 		switch (autoState) {
 		case 1:
 			readyLifter();
 			break;
 		case 2:
-			move(200);
+			moveForward(1);
 			break;
 		case 3:
 			liftUp();
 			break;
 		case 4:
-			move(-2000);
+			moveBackward(5);
 		case 5:
 			liftDown();
 			break;
 		case 6:
-			move(-200);
+			moveBackward(1);
 			break;
 		default:
 			break;
@@ -131,6 +136,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void teleopInit() {
 		mechDrive.setControlModeSpeed();
 		// set for velocity input
+		
+		mechDrive.setAllPID(KP, KI, KD);
+		// set P to driving value
 	}
 
 	/**
@@ -163,7 +171,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		if (camera == null)
+			cameraSetup();
+		// starts camera recording
 	}
 
 	// assigning joystick variables to joystick input
@@ -210,7 +220,6 @@ public class Robot extends IterativeRobot implements Pronstants {
 		
 		// position a car to tote level
 		while (toteLimit.get()) {
-			// move up past the tote limit
 			mLift1.set(LIFT_SPEED);
 			mLift2.set(LIFT_SPEED);
 		}
@@ -219,6 +228,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mLift1.set(0);
 		mLift2.set(0);
 		
+		// move down past the tote limit
 		while (!toteLimit.get()) {
 			mLift1.set(-0.4);
 			mLift2.set(-0.4);
@@ -230,20 +240,30 @@ public class Robot extends IterativeRobot implements Pronstants {
 		autoState++;
 	}
 	
-	private void move(int distance) {
-		mechDrive.resetPosition();
-		mechDrive.setPos(0, distance, 0);
+	private void moveForward(int distance) {
+		// moves forward in increments of 16 inches
+		for (int i = 0; i < distance; i++) {
+			while (mechDrive.rearLeft.getPosition() != -1000) {
+				mechDrive.setPos(0,-1000,0);
+				// forward is negative distance
+			}
+			mechDrive.resetPosition();
+		}
 		
 		autoState++;
-//		int subDistance = distance / 4;
-//		
-//		for (int i = 0; i < 4; i++) {
-//			mechDrive.resetPosition();
-//			mechDrive.setPos(0, subDistance, 0);
-//			while (mechDrive.rearLeft.getPosition() != subDistance) {
-//				// moving
-//			}
-//		}
+	}
+	
+	private void moveBackward(int distance) {
+		// moves backward in increments of 16 inches
+				for (int i = 0; i < distance; i++) {
+					while (mechDrive.rearLeft.getPosition() != 1000) {
+						mechDrive.setPos(0,1000,0);
+						// backward is positive distance
+					}
+					mechDrive.resetPosition();
+				}
+				
+				autoState++;
 	}
 	
 	private void liftUp() {
@@ -260,8 +280,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 	
 	private void liftDown() {
-		while (lowerLimit.get()) {
-			// while not at the lowest tote level, lifting down
+		while (toteLimit.get()) {
+			// while not at the tote level, lifting down
 			mLift1.set(LIFT_SPEED);
 			mLift2.set(LIFT_SPEED);
 		}
