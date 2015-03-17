@@ -78,13 +78,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousPeriodic() {
 		//cole check if this works
 		if (autoState == 1){
-			pickUp();
+			driveStraight(10.0);
 		} else if(autoState == 2){
-			driveBack(200.0);
+			pickUp();
 		} else if(autoState == 3){
-			putDown();
-		} else if(autoState == 4){
-			driveBack(10.0);
+			driveStraight(-200.0);
+//		} else if(autoState == 4){
+//			putDown();
+//		} else if(autoState == 5){
+//			driveStraight(-10.0);
 		}
 	}
 	
@@ -134,8 +136,9 @@ public class Robot extends IterativeRobot implements Pronstants {
 		z = jRight.getX();
 	}
 	
-	private void driveBack(double x){
-		mechDrive.setPos(0.0, -x, 0.0);
+	private void driveStraight(double x){
+		mechDrive.setPos(0.0, x, 0.0);
+		timer.delay(1.0);
 		autoState = autoState++;
 	}
 	
