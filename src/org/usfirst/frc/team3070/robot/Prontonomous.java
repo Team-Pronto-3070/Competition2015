@@ -1,29 +1,33 @@
-//package org.usfirst.frc.team3070.robot;
-//
-//import edu.wpi.first.wpilibj.CANTalon;
-//import edu.wpi.first.wpilibj.DigitalInput;
-//
-//public class Prontonomous implements Pronstants {
-//	
-//	interface AutoState {
-//		public AutoState check();
-//	}
-//	
-//	PIDMechDrive autoDrive;
+package org.usfirst.frc.team3070.robot;
+
+import edu.wpi.first.wpilibj.*;
+
+public class Prontonomous implements Pronstants {
+	
+	interface AutoState {
+		public AutoState check();
+	}
+	
+	PIDMechDrive autoDrive;
 //	DigitalInput upperLimit, lowerLimit, toteLimit;
-//	CANTalon lift1, lift2;
-//	
-//	public Prontonomous(PIDMechDrive aD, DigitalInput u, DigitalInput l, DigitalInput t, CANTalon l1, CANTalon l2) {
-//		autoDrive = aD;
-//		
+	ProntoLift Lifter;
+	
+	public Prontonomous(PIDMechDrive aD, /*DigitalInput u, DigitalInput l, DigitalInput t, */ProntoLift j) {
+		autoDrive = aD;
+		
 //		upperLimit = u;
 //		lowerLimit = l;
 //		toteLimit = t;
-//		
-//		lift1 = l1;
-//		lift2 = l2;
-//	}
-//	
+		
+		Lifter = j;
+	}
+	
+	public void run(){
+		if(timer.get()<0.25){
+			
+		}
+	}
+	
 //	enum AutoStates implements AutoState {
 //		StartSetLift {
 //			@Override
@@ -152,5 +156,5 @@
 //			}
 //		}
 //	}
-//
-//}
+
+}
