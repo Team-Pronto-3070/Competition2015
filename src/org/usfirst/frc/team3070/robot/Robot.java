@@ -37,19 +37,19 @@ public class Robot extends IterativeRobot implements Pronstants {
 	
 	int autoState = 0;
 
-	double x, y, z;
+	double x, y, z; // it appears that x indicates forward/backward; y indicates left/right; z indicates turn left/right (JDS)
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		mFrontLeft = new CANTalon(M_FRONT_LEFT_ID);
-		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID);
-		mRearLeft = new CANTalon(M_REAR_LEFT_ID);
-		mRearRight = new CANTalon(M_REAR_RIGHT_ID);
-		mLift1 = new CANTalon(M_LIFT1_ID);
-		mLift2 = new CANTalon(M_LIFT2_ID);
+		mFrontLeft  = new CANTalon(M_FRONT_LEFT_ID);  // front left wheel motor
+		mFrontRight = new CANTalon(M_FRONT_RIGHT_ID); // front right wheel motor
+		mRearLeft   = new CANTalon(M_REAR_LEFT_ID);   // rear left wheel motor
+		mRearRight  = new CANTalon(M_REAR_RIGHT_ID);  // rear right wheel motor
+		mLift1 = new CANTalon(M_LIFT1_ID);            // two motors drive the lifter,
+		mLift2 = new CANTalon(M_LIFT2_ID);            // ... and here is the second motor
 		mLoader = new CANTalon(M_LOADER_ID);
 		mFlexer = new CANTalon(M_FLEXER_ID);
 		// setting the CANTAlons
@@ -120,6 +120,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 			break;
 		case 4:
 			moveBackward(5);
+			break;
 		case 5:
 			liftDown();
 			break;

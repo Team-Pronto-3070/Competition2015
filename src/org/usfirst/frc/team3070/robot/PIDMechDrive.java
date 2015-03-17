@@ -7,10 +7,10 @@ public class PIDMechDrive implements Pronstants {
 	public CANTalon frontLeft, frontRight, rearLeft, rearRight;
 	
 	public PIDMechDrive(CANTalon fL, CANTalon fR, CANTalon rL, CANTalon rR) {
-		frontLeft = fL;
+		frontLeft  = fL;
 		frontRight = fR;
-		rearLeft = rL;
-		rearRight = rR;
+		rearLeft   = rL;
+		rearRight  = rR;
 		// assigning class motors to given motors
 		
 		setControlModeSpeed();
