@@ -203,7 +203,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 	// sets up the camera
 	private void cameraSetup() {
 		camera = CameraServer.getInstance();
-		camera.setQuality(0);
+		camera.setQuality(100);
 		camera.startAutomaticCapture();
 		// start recording
 	}
