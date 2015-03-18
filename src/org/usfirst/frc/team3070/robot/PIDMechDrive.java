@@ -22,15 +22,15 @@ public class PIDMechDrive implements Pronstants {
 		rearRight.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		// sets the sensor for PID to be the encoders on the CANTalons
 		
-		frontRight.reverseSensor(true);
+		frontRight.reverseSensor(false);
 		rearRight.reverseSensor(false);
-		frontLeft.reverseSensor(false);
+		frontLeft.reverseSensor(true);
 		rearLeft.reverseSensor(true);
 		// these encoders need to have their values reversed to operate properly
 		
 		frontLeft.reverseOutput(false);
-		rearLeft.reverseOutput(true);
-		frontRight.reverseOutput(false);
+		rearLeft.reverseOutput(false);
+		frontRight.reverseOutput(true);
 		rearRight.reverseOutput(true);
 		// these motors need to have their values reversed to operate properly
 
@@ -48,11 +48,12 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		// convert the joystick input to an encoder setting
-				
-		frontLeft.set(x + y + rotation);		
-		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);
-		rearRight.set(x + y - rotation);
+		
+		final double MC = 1.00;
+		frontLeft.set(x + y + rotation * MC);		
+		frontRight.set(-x + y - rotation * MC);		
+		rearLeft.set(-x + y + rotation * MC);
+		rearRight.set(x + y - rotation * MC);
 		// calculations for setting each wheel to the right velocity
 	}
 	

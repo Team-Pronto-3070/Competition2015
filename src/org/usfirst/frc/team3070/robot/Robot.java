@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		mechDrive.resetPosition();
 		// zero the encoders
 		
-		mechDrive.setAllPID(AUTO_KP, KI, KD);
+		mechDrive.setAllPID(KP, KI, KD);
 		// set slower P value
 		
 		autoState = 1;
@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		getJoystickInput();
 		// assigns values to x, y, and based on joystick input
 
-		mechDrive.drive(x, y, z);
+		mechDrive.drive(-z, y, -x);
 		// sets the motors to a velocity based on joystick input
 
 		lifter.periodic();
@@ -157,7 +157,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		flexer.periodic();
 		// operate the other functions of the robot depending on button input
 
-		printToSmartDashboard();
+		//printToSmartDashboard();
 		// updates smartdashboard values
 	}
 
