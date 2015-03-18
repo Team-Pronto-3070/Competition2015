@@ -49,11 +49,10 @@ public class PIDMechDrive implements Pronstants {
 		rotation = convertToEncValue(rotation);
 		// convert the joystick input to an encoder setting
 		
-		final double MC = 1.00;
-		frontLeft.set(x + y + rotation * MC);		
-		frontRight.set(-x + y - rotation * MC);		
-		rearLeft.set(-x + y + rotation * MC);
-		rearRight.set(x + y - rotation * MC);
+		frontLeft.set(x + y + rotation);		
+		frontRight.set(-x + y - rotation);		
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
 		// calculations for setting each wheel to the right velocity
 	}
 	
@@ -103,7 +102,13 @@ public class PIDMechDrive implements Pronstants {
 			a = 0.0;
 		}
 		
-		a = Math.pow(a, 3);
+		int negativeCheck = 1;
+		
+		if (a < 0) {
+			negativeCheck = -1;
+		}
+		
+		a = Math.pow(a, 2);
 		/*
 		 * cubes a to improve sensitivity driving
 		 * low joystick input yields low motor output
@@ -112,7 +117,7 @@ public class PIDMechDrive implements Pronstants {
 		 * changes CANTalons from linear output to cubic output
 		 */
 		
-		return a;
+		return a * negativeCheck;
 	}
 	
 	// multiplies joystick input by maximum Encoder speed

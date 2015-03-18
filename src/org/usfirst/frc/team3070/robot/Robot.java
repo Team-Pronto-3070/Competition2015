@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,6 +35,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	CameraServer camera;
 	// creating camera
+	
+	Timer timer;
 	
 	int autoState = 0;
 
@@ -76,6 +79,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		loader = new ProntoLoader(mLoader, jLeft, jRight);
 		flexer = new ProntoFlexer(mFlexer, jLeft);
 		// setting drive, load, lift, and flex classes
+		
+		timer = new Timer();
 
 		x = 0.0;
 		y = 0.0;
@@ -83,21 +88,20 @@ public class Robot extends IterativeRobot implements Pronstants {
 	}
 
 	public void autonomousInit() {
-		if (camera == null)
-			cameraSetup();
-		// starts camera recording
+//		if (camera == null)
+//			cameraSetup();
+//		// starts camera recording
 		
-		mechDrive.setControlModePosition();
-		// set drive to move based on position input
+//		mechDrive.setControlModePosition();
+//		// set drive to move based on position input
 		
-		mechDrive.resetPosition();
-		// zero the encoders
+//		mechDrive.resetPosition();
+//		// zero the encoders
 		
-		mechDrive.setAllPID(KP, KI, KD);
-		// set slower P value
+		timer.reset();
+		timer.start();
 		
-		autoState = 1;
-	}
+		}
 
 	/**
 	 * This function is called periodically during autonomous
@@ -108,30 +112,37 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 		// 1000 is about 16 inches
 		
-		switch (autoState) {
-		case 1:
-			readyLifter();
-			break;
-		case 2:
-			moveForward(1);
-			break;
-		case 3:
-			liftUp();
-			break;
-		case 4:
-			moveBackward(5);
-			break;
-		case 5:
-			liftDown();
-			break;
-		case 6:
-			moveBackward(1);
-			break;
-		default:
-			break;
+		if (timer.get() != 1.5) {
+			mechDrive.drive(0, -0.75, 0);
+		} else {
+			mechDrive.drive(0,0,0);
+			timer.stop();
 		}
 		
-		System.out.println("State: " + autoState);
+//		switch (autoState) {
+//		case 1:
+//			readyLifter();
+//			break;
+//		case 2:
+//			moveForward(1);
+//			break;
+//		case 3:
+//			liftUp();
+//			break;
+//		case 4:
+//			moveBackward(5);
+//			break;
+//		case 5:
+//			liftDown();
+//			break;
+//		case 6:
+//			moveBackward(1);
+//			break;
+//		default:
+//			break;
+//		}
+//		
+//		System.out.println("State: " + autoState);
 	}
 
 	public void teleopInit() {
@@ -149,7 +160,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		getJoystickInput();
 		// assigns values to x, y, and based on joystick input
 
-		mechDrive.drive(-z, y, -x);
+		mechDrive.drive(x, y, z);
 		// sets the motors to a velocity based on joystick input
 
 		lifter.periodic();
@@ -157,7 +168,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		flexer.periodic();
 		// operate the other functions of the robot depending on button input
 
-		//printToSmartDashboard();
+		printToSmartDashboard();
 		// updates smartdashboard values
 	}
 
