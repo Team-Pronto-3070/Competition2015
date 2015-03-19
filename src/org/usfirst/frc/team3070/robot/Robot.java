@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	public void autonomousPeriodic() {
 		if (timer.get() != 1.5) {
-			mechDrive.drive(0, 1.75, 0);
+			mechDrive.drive(0, -1.5, 0);
 		} else {
 			mechDrive.drive(0,0,0);
 			timer.stop();
