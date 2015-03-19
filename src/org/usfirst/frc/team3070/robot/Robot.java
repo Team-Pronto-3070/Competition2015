@@ -113,7 +113,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		// 1000 is about 16 inches
 		
 		if (timer.get() != 1.5) {
-			mechDrive.drive(0, -0.75, 0);
+			mechDrive.drive(0, 1.75, 0);
 		} else {
 			mechDrive.drive(0,0,0);
 			timer.stop();
