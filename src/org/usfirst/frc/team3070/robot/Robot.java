@@ -17,7 +17,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 	Joystick jLeft, jRight; //joysticks
 
 	//instances of mecanum wheels, lifter, loader, and flexer
-	PIDMechDrive mechDrive; 
+	PIDMechDrive mechDrive;
+	Timer timer;
 
 	ProntoLift lifter;
 	ProntoLoader loader;
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 		//assigns the variables to the mecanum wheels
 		mechDrive = new PIDMechDrive(mFrontLeft, mFrontRight, mRearLeft,
 				mRearRight); //declares the mecanum drive
+		timer = new Timer();
 		
 		//assigns the variables to the lifter, loader, and flexer
 		lifter = new ProntoLift(mLift1, mLift2, upperlimit, lowerlimit, totelimit, jRight);
@@ -66,12 +68,15 @@ public class Robot extends IterativeRobot implements Pronstants {
 	public void autonomousInit() {
 		mechDrive.setControlModePosition();
 		mechDrive.resetPosition();
+		
+		timer.reset();
+		timer.start();
 
 	}
 
 	public void autonomousPeriodic() {
 		if (timer.get() != 1.5) {
-			mechDrive.drive(0, -0.75, 0);
+			mechDrive.drive(0, -1.5, 0);
 		} else {
 			mechDrive.drive(0,0,0);
 			timer.stop();

@@ -53,7 +53,7 @@ public class PIDMechDrive implements Pronstants {
 		rotation = convertToEncValue(rotation);
 		
 		//drives
-		final double MC = 0.75;
+		final double MC = 0.5;
 		frontLeft.set((x + y + rotation) * MC);
 		frontRight.set((-x + y - rotation) * MC);
 		rearLeft.set((-x + y + rotation) * MC);
