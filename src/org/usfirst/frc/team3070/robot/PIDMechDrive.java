@@ -53,11 +53,10 @@ public class PIDMechDrive implements Pronstants {
 		rotation = convertToEncValue(rotation);
 		
 		//drives
-		final double MC = 0.5;
-		frontLeft.set((x + y + rotation) * MC);
-		frontRight.set((-x + y - rotation) * MC);
-		rearLeft.set((-x + y + rotation) * MC);
-		rearRight.set((x + y - rotation) * MC);
+		frontLeft.set(x + y + rotation);
+		frontRight.set(-x + y - rotation);
+		rearLeft.set(-x + y + rotation);
+		rearRight.set(x + y - rotation);
 	}
 	
 	//Sets robot to a specific location
