@@ -168,8 +168,8 @@ public class ProntoLift implements Pronstants{
 	
 	//makes lift move correctly
 	private static void setLift(double speed) {
-		motor1.set(-speed);
-		motor2.set(speed);
+		motor1.set(speed);
+		motor2.set(-speed);
 	}
 
 }
