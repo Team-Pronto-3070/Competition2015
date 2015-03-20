@@ -31,8 +31,8 @@ public interface Pronstants {
 	
 	// Limit Switches
 	public static final int UPPER_LIMIT_ID = 1;
-	public static final int LOWER_LIMIT_ID = 0;
-	public static final int TOTE_LIMIT_ID = 2;
+	public static final int LOWER_LIMIT_ID = 2;
+	public static final int TOTE_LIMIT_ID = 5;
 
 	// Joystick
 	// used in: Robot.java, PIDMechDrive.java

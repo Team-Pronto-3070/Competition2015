@@ -110,13 +110,14 @@ public class Robot extends IterativeRobot implements Pronstants {
 		// Example: mechDrive.drive(0, 1, 0);
 		// Makes the robot drive at a velocity of one
 
-		if (timer.get() < 1) {
-			mechDrive.drive(0, .5, 0);
-		} else if (timer.get() >= 1 && timer.get() >= 1.5) {
+		if (timer.get() < .5) {
+			mechDrive.drive(0, -.75, 0);
+		} else if (timer.get() >= .5 && timer.get() <= 1.25) {
+			mechDrive.drive(0,  0,  0);
 			mLift1.set(-LIFT_SPEED);
 			mLift2.set(-LIFT_SPEED);
-		} else if (timer.get() > 1.5 && timer.get() < 2.5) {
-			mechDrive.drive(0, .5, 0);
+		} else if (timer.get() > 1.25 && timer.get() < 4.25) {
+			mechDrive.drive(0, .75, 0);
 			mLift1.set(0.0);
 			mLift2.set(0.0);
 		} else {
@@ -147,8 +148,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 		// sets the motors to a velocity based on joystick input
 
 		lifter.periodic();
-		loader.periodic();
-		flexer.periodic();
+		// loader.periodic();
+		// flexer.periodic();
 		// operate the other functions of the robot depending on button input
 
 		printToSmartDashboard();
@@ -157,8 +158,8 @@ public class Robot extends IterativeRobot implements Pronstants {
 
 	public void disabledInit() {
 		lifter.stopPeriodic();
-		loader.stopPeriodic();
-		flexer.stopPeriodic();
+		// loader.stopPeriodic();
+		// flexer.stopPeriodic();
 		// stops the other functions on the robot upon disable
 	}
 
