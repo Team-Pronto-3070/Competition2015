@@ -116,7 +116,7 @@ public class Robot extends IterativeRobot implements Pronstants {
 			mechDrive.drive(0,  0,  0);
 			mLift1.set(-LIFT_SPEED);
 			mLift2.set(-LIFT_SPEED);
-		} else if (timer.get() > 1.25 && timer.get() < 5.00) {
+		} else if (timer.get() > 1.25 && timer.get() < 4.75) {
 			mechDrive.drive(0, .75, 0);
 			mLift1.set(0.0);
 			mLift2.set(0.0);
