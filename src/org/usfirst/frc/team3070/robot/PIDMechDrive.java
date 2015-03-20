@@ -23,15 +23,15 @@ public class PIDMechDrive implements Pronstants {
 		// sets the sensor for PID to be the encoders on the CANTalons
 		
 		frontRight.reverseSensor(true);
-		rearRight.reverseSensor(false);
+		rearRight.reverseSensor(true);
 		frontLeft.reverseSensor(false);
-		rearLeft.reverseSensor(true);
+		rearLeft.reverseSensor(false);
 		// these encoders need to have their values reversed to operate properly
 		
 		frontLeft.reverseOutput(false);
-		rearLeft.reverseOutput(true);
+		rearLeft.reverseOutput(false);
 		frontRight.reverseOutput(false);
-		rearRight.reverseOutput(true);
+		rearRight.reverseOutput(false);
 		// these motors need to have their values reversed to operate properly
 
 		setAllPID(KP, KI, KD);
@@ -48,11 +48,11 @@ public class PIDMechDrive implements Pronstants {
 		y = convertToEncValue(y);
 		rotation = convertToEncValue(rotation);
 		// convert the joystick input to an encoder setting
-				
-		frontLeft.set(x + y + rotation);		
-		frontRight.set(-x + y - rotation);		
-		rearLeft.set(-x + y + rotation);
-		rearRight.set(x + y - rotation);
+		
+		frontLeft.set((x + y + rotation));		
+		frontRight.set((-x + y - rotation));		
+		rearLeft.set(-(-x + y + rotation));
+		rearRight.set(-(x + y - rotation));
 		// calculations for setting each wheel to the right velocity
 	}
 	
@@ -102,7 +102,13 @@ public class PIDMechDrive implements Pronstants {
 			a = 0.0;
 		}
 		
-		a = Math.pow(a, 3);
+		int negativeCheck = 1;
+		
+		if (a < 0) {
+			negativeCheck = -1;
+		}
+		
+		a = Math.pow(a, 2);
 		/*
 		 * cubes a to improve sensitivity driving
 		 * low joystick input yields low motor output
@@ -111,7 +117,7 @@ public class PIDMechDrive implements Pronstants {
 		 * changes CANTalons from linear output to cubic output
 		 */
 		
-		return a;
+		return a * negativeCheck;
 	}
 	
 	// multiplies joystick input by maximum Encoder speed

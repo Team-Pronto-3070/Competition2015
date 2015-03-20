@@ -60,6 +60,7 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (!upper.get()) {
+					System.out.println("At Top");
 					notAtTop = false;
 					return Stopping;
 				}
@@ -78,6 +79,7 @@ public class ProntoLift implements Pronstants{
 		WaitForRelease {
 			@Override
 			public LiftState check() {
+				System.out.println("Tote Limit");
 				if (!tote.get()) {
 					setLift(.4);
 				} else {
@@ -103,6 +105,7 @@ public class ProntoLift implements Pronstants{
 			@Override
 			public LiftState check() {
 				if (!lower.get()) {
+					System.out.println("At bottom");
 					notAtBottom = false;
 					return Stopping;
 				}

@@ -31,8 +31,8 @@ public interface Pronstants {
 	
 	// Limit Switches
 	public static final int UPPER_LIMIT_ID = 1;
-	public static final int LOWER_LIMIT_ID = 0;
-	public static final int TOTE_LIMIT_ID = 2;
+	public static final int LOWER_LIMIT_ID = 2;
+	public static final int TOTE_LIMIT_ID = 5;
 
 	// Joystick
 	// used in: Robot.java, PIDMechDrive.java
@@ -45,14 +45,13 @@ public interface Pronstants {
 	public static final double KP = 1.25;
 	public static final double KI = 0.0;
 	public static final double KD = 0.0;
-	public static final double AUTO_KP = 0.75;
 	
 	// Static velocities
 	// used in: all classes
 	public static final double LIFT_SPEED = .6;
 	public static final double LOAD_SPEED = 1.0;
 	public static final double FLEX_SPEED = 1.0;
-	public static final int ENCODER_MAX_SPEED = 1600;
+	public static final int ENCODER_MAX_SPEED = 800;
 	public static final int NUM_TICKS = 125;
-	public static final double RAMP_RATE = 25.0;
+	public static final double RAMP_RATE = 60.0;
 }
